@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper text-black">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="w-full bg-amber-400 flex justify-center">
+    <div class="max-w-[1280px] w-full bg-red-500">
+      <RouterView />
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 

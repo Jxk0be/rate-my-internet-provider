@@ -21,10 +21,9 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[city]/': RouteRecordInfo<'/[city]/', '/:city', { city: ParamValue<true> }, { city: ParamValue<false> }>,
     '/[city]/[provider]/': RouteRecordInfo<'/[city]/[provider]/', '/:city/:provider', { city: ParamValue<true>, provider: ParamValue<true> }, { city: ParamValue<false>, provider: ParamValue<false> }>,
+    '/account/': RouteRecordInfo<'/account/', '/account', Record<never, never>, Record<never, never>>,
     '/all-providers/': RouteRecordInfo<'/all-providers/', '/all-providers', Record<never, never>, Record<never, never>>,
     '/privacy-policy/': RouteRecordInfo<'/privacy-policy/', '/privacy-policy', Record<never, never>, Record<never, never>>,
-    '/profile/': RouteRecordInfo<'/profile/', '/profile', Record<never, never>, Record<never, never>>,
-    '/profile/[profileId]/': RouteRecordInfo<'/profile/[profileId]/', '/profile/:profileId', { profileId: ParamValue<true> }, { profileId: ParamValue<false> }>,
     '/terms-and-conditions/': RouteRecordInfo<'/terms-and-conditions/', '/terms-and-conditions', Record<never, never>, Record<never, never>>,
   }
 }

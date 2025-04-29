@@ -4,6 +4,6 @@
 
 <template>
   <main>
-    <h1 class=" text-3xl font-bold text-red-500">Testing TailwindCSS</h1>
+    <h1 class="text-3xl font-bold">Testing TailwindCSS</h1>
   </main>
 </template>
