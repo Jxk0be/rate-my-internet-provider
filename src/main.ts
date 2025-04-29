@@ -11,7 +11,6 @@ import { Button } from 'primevue'
 const app = createApp(App)
 
 app.use(PrimeVue, {
-  // Default theme configuration
   theme: {
     preset: Aura,
     options: {
