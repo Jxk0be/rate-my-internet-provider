@@ -1,3 +1,20 @@
 @import './base.css';
 @import "tailwindcss";
 
+/* base.css */
+:root {
+  /* light theme */
+  --bg-color: white;
+  --text-color: black;
+}
+
+.my-app-dark {
+  /* dark theme */
+  --bg-color: #181818;
+  --text-color: white;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
