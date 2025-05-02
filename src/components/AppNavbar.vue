@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { User } from '@supabase/supabase-js'
 import LoginRegisterModal from '@/components/LoginRegisterModal.vue'
 
 const loginVisible = ref(false)
 const registerVisible = ref(false)
+const currentUser = ref<User | null>(null)
 </script>
 
 <template>
@@ -17,7 +19,8 @@ const registerVisible = ref(false)
         <h1>Test_2</h1>
         <h1>Test_3</h1>
         <h1>Test_4</h1>
-        <div class="flex justify-center items-center gap-x-4">
+
+        <div v-if="!currentUser" class="flex justify-center items-center gap-x-4">
           <h1 @click="() => (loginVisible = true)" class="cursor-pointer">Login</h1>
           <button
             @click="() => (registerVisible = true)"
@@ -26,6 +29,7 @@ const registerVisible = ref(false)
             Register
           </button>
         </div>
+        <h1 v-else>{{ currentUser.email }}</h1>
       </div>
     </div>
   </div>
@@ -33,6 +37,7 @@ const registerVisible = ref(false)
   <LoginRegisterModal
     v-model:login-visible="loginVisible"
     v-model:register-visible="registerVisible"
+    v-model:current-user="currentUser"
   />
 </template>
 
