@@ -6,7 +6,7 @@ import router from './router'
 import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
 
-import { Button } from 'primevue'
+import { Button, Dialog, InputText } from 'primevue'
 
 const app = createApp(App)
 
@@ -25,4 +25,7 @@ app.use(createPinia())
 app.use(router)
 
 app.component('AppButton', Button)
+app.component('AppDialog', Dialog)
+app.component('AppInputText', InputText)
+
 app.mount('#app')
