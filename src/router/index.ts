@@ -6,7 +6,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   if (to.meta.requiresAuth) {
     console.log("requires auth")
   }
