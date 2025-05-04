@@ -16,9 +16,8 @@ const userStore = useUserStore()
       <h1 class="font-bold text-lg">rate my <span class="text-cyan-500">internet</span></h1>
       <div class="gap-x-6 font-semibold text-lg flex justify-between items-center h-full">
         <h1>Test_1</h1>
-        <div v-if="userStore.user" class="flex justify-center items-center gap-x-4">
-          <h1>{{ userStore.user?.email }}</h1>
-          <RouterLink to="/account">Account</RouterLink>
+        <div v-if="userStore.user" class="flex justify-center items-center gap-x-6">
+          <RouterLink to="/account">{{ userStore.username }}</RouterLink>
           <button
             @click="userStore.logout()"
             class="bg-cyan-500 cursor-pointer rounded-[40px] py-1 px-3"
@@ -26,7 +25,7 @@ const userStore = useUserStore()
             Logout
           </button>
         </div>
-        <div v-else class="flex justify-center items-center gap-x-4">
+        <div v-else class="flex justify-center items-center gap-x-6">
           <h1 @click="() => (loginVisible = true)" class="cursor-pointer">Login</h1>
           <button
             @click="() => (registerVisible = true)"

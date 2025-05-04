@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 import AppNavbar from '@/components/AppNavbar.vue'
 
 const testing = () => {
-  document.documentElement.classList.toggle('my-app-dark')
+  document.documentElement.classList.toggle('dark')
 }
 </script>
 

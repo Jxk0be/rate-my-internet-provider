@@ -1,20 +1,19 @@
 @import './base.css';
 @import "tailwindcss";
+@import "tailwindcss-primeui";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* base.css */
 :root {
   /* light theme */
   --bg-color: white;
-  --text-color: black;
 }
 
-.my-app-dark {
+.dark {
   /* dark theme */
   --bg-color: #181818;
-  --text-color: white;
 }
 
 body {
   background-color: var(--bg-color);
-  color: var(--text-color);
 }
