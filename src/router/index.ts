@@ -1,16 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
+import { useUserStore } from '@/stores/user.ts'
 
 const router = createRouter({
-  history: createWebHistory("/"),
+  history: createWebHistory('/'),
   routes,
-});
+})
 
 router.beforeEach((to, _from, next) => {
-  if (to.meta.requiresAuth) {
-    console.log("requires auth")
+  const userStore = useUserStore()
+
+  if (to.meta.requiresAuth && !userStore.user) {
+    console.log('requires auth')
+    return next('/')
   }
+
   next()
 })
 
-export default router;
+export default router

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { User } from '@supabase/supabase-js'
 import LoginRegisterModal from '@/components/LoginRegisterModal.vue'
+import { useUserStore } from '@/stores/user.ts'
 
 const loginVisible = ref(false)
 const registerVisible = ref(false)
-const currentUser = ref<User | null>(null)
+const userStore = useUserStore()
 </script>
 
 <template>
@@ -16,11 +16,17 @@ const currentUser = ref<User | null>(null)
       <h1 class="font-bold text-lg">rate my <span class="text-cyan-500">internet</span></h1>
       <div class="gap-x-6 font-semibold text-lg flex justify-between items-center h-full">
         <h1>Test_1</h1>
-        <h1>Test_2</h1>
-        <h1>Test_3</h1>
-        <h1>Test_4</h1>
-
-        <div v-if="!currentUser" class="flex justify-center items-center gap-x-4">
+        <div v-if="userStore.user" class="flex justify-center items-center gap-x-4">
+          <h1>{{ userStore.user?.email }}</h1>
+          <RouterLink to="/account">Account</RouterLink>
+          <button
+            @click="userStore.logout()"
+            class="bg-cyan-500 cursor-pointer rounded-[40px] py-1 px-3"
+          >
+            Logout
+          </button>
+        </div>
+        <div v-else class="flex justify-center items-center gap-x-4">
           <h1 @click="() => (loginVisible = true)" class="cursor-pointer">Login</h1>
           <button
             @click="() => (registerVisible = true)"
@@ -29,7 +35,6 @@ const currentUser = ref<User | null>(null)
             Register
           </button>
         </div>
-        <h1 v-else>{{ currentUser.email }}</h1>
       </div>
     </div>
   </div>
@@ -37,7 +42,6 @@ const currentUser = ref<User | null>(null)
   <LoginRegisterModal
     v-model:login-visible="loginVisible"
     v-model:register-visible="registerVisible"
-    v-model:current-user="currentUser"
   />
 </template>
 

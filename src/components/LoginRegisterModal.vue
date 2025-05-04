@@ -1,39 +1,35 @@
 <script setup lang="ts">
-import { supabase } from '@/supabase.ts'
 import { ref } from 'vue'
-import type { User } from '@supabase/supabase-js'
+import { useUserStore } from '@/stores/user.ts'
 
 const props = defineProps<{
   loginVisible: boolean
   registerVisible: boolean
-  currentUser: User | null
 }>()
 
 const emit = defineEmits<{
   'update:loginVisible': [value: boolean]
   'update:registerVisible': [value: boolean]
-  'update:currentUser': [value: User | null]
 }>()
 
+const userStore = useUserStore()
 const loginEmail = ref('')
 const loginPassword = ref('')
 const registerEmail = ref('')
 const registerPassword = ref('')
 
-const registerAccount = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: registerEmail.value,
-    password: registerPassword.value,
-  })
-
-  if (error) {
-    console.log(error)
-    return
-  }
+const handleRegister = async () => {
+  await userStore.register(registerEmail.value, registerPassword.value)
 
   clearFields()
-  emit('update:currentUser', data?.user)
   emit('update:registerVisible', false)
+}
+
+const handleLogin = async () => {
+  await userStore.login(loginEmail.value, loginPassword.value)
+
+  clearFields()
+  emit('update:loginVisible', false)
 }
 
 const clearFields = () => {
@@ -42,8 +38,6 @@ const clearFields = () => {
   registerEmail.value = ''
   registerPassword.value = ''
 }
-
-const loginAccount = async () => {}
 </script>
 
 <template>
@@ -69,9 +63,7 @@ const loginAccount = async () => {}
       <button class="cursor-pointer" type="button" @click="emit('update:loginVisible', false)">
         Cancel
       </button>
-      <button class="cursor-pointer" type="button" @click="emit('update:loginVisible', false)">
-        Save
-      </button>
+      <button @click="handleLogin" class="cursor-pointer" type="button">Save</button>
     </div>
   </AppDialog>
 
@@ -97,7 +89,7 @@ const loginAccount = async () => {}
       <button class="cursor-pointer" type="button" @click="emit('update:registerVisible', false)">
         Cancel
       </button>
-      <button class="cursor-pointer" type="button" @click="registerAccount">Save</button>
+      <button class="cursor-pointer" type="button" @click="handleRegister">Save</button>
     </div>
   </AppDialog>
 </template>
