@@ -7,6 +7,7 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
 
 import { Button, Dialog, InputText } from 'primevue'
+import AutoComplete from 'primevue/autocomplete'
 
 const app = createApp(App)
 
@@ -24,6 +25,7 @@ app.use(PrimeVue, {
 app.use(createPinia())
 app.use(router)
 
+app.component('AppAutocomplete', AutoComplete)
 app.component('AppButton', Button)
 app.component('AppDialog', Dialog)
 app.component('AppInputText', InputText)

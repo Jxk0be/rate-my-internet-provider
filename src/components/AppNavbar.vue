@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import LoginRegisterModal from '@/components/LoginRegisterModal.vue'
 import { useUserStore } from '@/stores/user.ts'
 
 const loginVisible = ref(false)
 const registerVisible = ref(false)
 const userStore = useUserStore()
+// You'll need this to track the current mode for the icon
+const darkMode = ref(document.documentElement.classList.contains('dark'))
+
+const toggleDarkMode = () => {
+  darkMode.value = !darkMode.value
+  document.documentElement.classList.toggle('dark')
+}
 </script>
 
 <template>
@@ -27,6 +34,7 @@ const userStore = useUserStore()
         </div>
         <div v-else class="flex justify-center items-center gap-x-6">
           <h1 @click="() => (loginVisible = true)" class="cursor-pointer">Login</h1>
+
           <button
             @click="() => (registerVisible = true)"
             class="bg-cyan-500 cursor-pointer rounded-[40px] py-1 px-3"
@@ -34,6 +42,13 @@ const userStore = useUserStore()
             Register
           </button>
         </div>
+
+        <AppButton
+          @click="toggleDarkMode"
+          :class="`p-button-rounded p-button-text ${darkMode ? '!bg-yellow-500' : '!bg-gray-400 '}`"
+        >
+          <i :class="`${darkMode ? 'pi pi-sun' : 'pi pi-moon'} !text-white !font-semibold`"></i>
+        </AppButton>
       </div>
     </div>
   </div>
