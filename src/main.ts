@@ -8,6 +8,7 @@ import Aura from '@primeuix/themes/aura'
 
 import { Button, Dialog, InputText } from 'primevue'
 import AutoComplete from 'primevue/autocomplete'
+import ProgressSpinner from 'primevue/progressspinner'
 
 const app = createApp(App)
 
@@ -29,5 +30,6 @@ app.component('AppAutocomplete', AutoComplete)
 app.component('AppButton', Button)
 app.component('AppDialog', Dialog)
 app.component('AppInputText', InputText)
+app.component('AppProgressSpinner', ProgressSpinner)
 
 app.mount('#app')
