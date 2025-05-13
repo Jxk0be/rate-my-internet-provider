@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 const route = useRoute()
-const city = route.params.city
+
+const city = computed(() => route.params.city)
 </script>
 
 <template>
