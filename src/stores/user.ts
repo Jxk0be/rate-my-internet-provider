@@ -43,6 +43,12 @@ export const useUserStore = defineStore('user', () => {
     updateUser(data?.user || null)
   }
 
+  const googleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    })
+  }
+
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
 
@@ -55,5 +61,37 @@ export const useUserStore = defineStore('user', () => {
     await router.push('/')
   }
 
-  return { login, logout, register, updateUser, user, username }
+  const forgotPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email)
+
+    if (error) {
+      console.log('Password Reset Error:', error)
+      return false
+    }
+    return true
+  }
+
+  const updatePassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({
+      password: password,
+    })
+
+    if (error) {
+      console.log('Password update error:', error)
+      return false
+    }
+    return true
+  }
+
+  return {
+    forgotPassword,
+    googleLogin,
+    login,
+    logout,
+    register,
+    updatePassword,
+    updateUser,
+    user,
+    username,
+  }
 })

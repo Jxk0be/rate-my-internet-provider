@@ -5,13 +5,29 @@ import { onMounted, provide, ref } from 'vue'
 import { useCountryStateCityAPI } from '@/stores/countryStateCityAPI.ts'
 import type { State } from '@/types/countryStateCity'
 import { statesKey } from '@/injectionKeys.ts'
+import { supabase } from '@/supabase.ts'
+import { useUserStore } from '@/stores/user.ts'
 
 const { loadAllStates } = useCountryStateCityAPI()
+const userStore = useUserStore()
 const allStates = ref<State[]>([])
 const appReady = ref(false)
 
 onMounted(async () => {
-  allStates.value = await loadAllStates()
+  const [statesResult, sessionResult] = await Promise.allSettled([
+    loadAllStates(),
+    supabase.auth.getSession(),
+  ])
+
+  if (statesResult.status === 'fulfilled') {
+    allStates.value = statesResult.value
+  }
+
+  const session = sessionResult.status === 'fulfilled' ? sessionResult.value.data.session : null
+  const error = sessionResult.status === 'rejected' ? sessionResult.reason : null
+  if (session) userStore.updateUser(session.user)
+  if (error) console.log(error)
+
   appReady.value = true
 })
 

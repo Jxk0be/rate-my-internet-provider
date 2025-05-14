@@ -24,6 +24,7 @@ declare module 'vue-router/auto-routes' {
     '/account/': RouteRecordInfo<'/account/', '/account', Record<never, never>, Record<never, never>>,
     '/all-providers/': RouteRecordInfo<'/all-providers/', '/all-providers', Record<never, never>, Record<never, never>>,
     '/privacy-policy/': RouteRecordInfo<'/privacy-policy/', '/privacy-policy', Record<never, never>, Record<never, never>>,
+    '/reset-password/': RouteRecordInfo<'/reset-password/', '/reset-password', Record<never, never>, Record<never, never>>,
     '/terms-and-conditions/': RouteRecordInfo<'/terms-and-conditions/', '/terms-and-conditions', Record<never, never>, Record<never, never>>,
   }
 }
