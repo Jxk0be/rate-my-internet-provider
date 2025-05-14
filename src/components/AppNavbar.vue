@@ -84,8 +84,6 @@ const routeToLocation = async () => {
     const locationRoute = city + '_' + state
     await router.push(locationRoute)
     isSearchVisible.value = false
-    selectedState.value = null
-    selectedCity.value = null
     isRouting.value = false
   }
 }

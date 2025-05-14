@@ -19,8 +19,8 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
-    '/[city]/': RouteRecordInfo<'/[city]/', '/:city', { city: ParamValue<true> }, { city: ParamValue<false> }>,
-    '/[city]/[provider]/': RouteRecordInfo<'/[city]/[provider]/', '/:city/:provider', { city: ParamValue<true>, provider: ParamValue<true> }, { city: ParamValue<false>, provider: ParamValue<false> }>,
+    '/[location]/': RouteRecordInfo<'/[location]/', '/:location', { location: ParamValue<true> }, { location: ParamValue<false> }>,
+    '/[location]/[provider]/': RouteRecordInfo<'/[location]/[provider]/', '/:location/:provider', { location: ParamValue<true>, provider: ParamValue<true> }, { location: ParamValue<false>, provider: ParamValue<false> }>,
     '/account/': RouteRecordInfo<'/account/', '/account', Record<never, never>, Record<never, never>>,
     '/all-providers/': RouteRecordInfo<'/all-providers/', '/all-providers', Record<never, never>, Record<never, never>>,
     '/privacy-policy/': RouteRecordInfo<'/privacy-policy/', '/privacy-policy', Record<never, never>, Record<never, never>>,

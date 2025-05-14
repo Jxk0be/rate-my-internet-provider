@@ -44,9 +44,17 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const googleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
+      options: {
+        redirectTo: import.meta.env.VITE_PROJECT_URL,
+      },
     })
+
+    if (error) {
+      console.log('Google sign in Error:', error)
+      return
+    }
   }
 
   const logout = async () => {
@@ -82,6 +90,66 @@ export const useUserStore = defineStore('user', () => {
     }
     return true
   }
+
+  const getCurrentUser = async () => {
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.getSession()
+
+    if (error) {
+      throw error
+    }
+
+    return session?.user
+  }
+
+  const updatePublicUsers = async (userId: string) => {
+    if (userId) {
+      const { data: existingUsers, error: checkError } = await supabase
+        .from('public_users')
+        .select('user_id')
+        .eq('user_id', userId)
+
+      // Check if we have any users in the array
+      const existingUser = existingUsers && existingUsers[0]
+
+      if (checkError) {
+        console.error('Error checking user existence:', checkError)
+        return
+      }
+
+      // Only insert if user doesn't exist
+      if (!existingUser) {
+        const { error: insertError } = await supabase
+          .from('public_users')
+          .insert([{ user_id: userId }])
+          .select()
+
+        if (insertError) {
+          console.error('Error inserting user:', insertError)
+        }
+      }
+    }
+  }
+
+  // Initialize auth state
+  const initialize = async () => {
+    try {
+      user.value = (await getCurrentUser()) ?? null
+
+      supabase.auth.onAuthStateChange(async (_event, session) => {
+        user.value = session?.user ?? null
+        await updatePublicUsers(user.value?.id ?? '')
+        console.log(user.value?.email ?? null)
+      })
+    } catch (error) {
+      console.error('Error initializing auth:', error)
+    }
+  }
+
+  // Initialize on store creation
+  initialize().then(() => console.log('initialized'))
 
   return {
     forgotPassword,
