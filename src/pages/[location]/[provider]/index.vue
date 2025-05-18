@@ -125,7 +125,9 @@ const calculateOverallRating = (review: Review) => {
     <template v-if="providerReviews.length !== 0">
       <div class="w-full flex flex-col gap-y-2 justify-center items-start">
         <template v-for="(review, _idx) in providerReviews" :key="_idx">
-          <div class="flex border-b-1 border-slate-200 py-2 gap-y-1 flex-col justify-center w-full">
+          <div
+            :class="`flex ${providerReviews.length > 1 && _idx === providerReviews.length - 1 ? '' : 'border-b-1'} border-slate-200 py-2 gap-y-1 flex-col justify-center w-full`"
+          >
             <div class="flex items-center mb-2 gap-x-2">
               <AppRating
                 readonly
