@@ -102,7 +102,7 @@ const calculateOverallRating = (review: Review) => {
 </script>
 
 <template>
-  <div v-if="!isLoading" class="provider-view flex w-full flex-col py-8">
+  <div v-if="!isLoading" class="provider-view flex w-full flex-col py-2">
     <h1 class="font-bold text-3xl capitalize">{{ activeProvider.name }}</h1>
     <h1 class="text-xl mb-1">{{ locationName }}</h1>
     <div class="flex items-center gap-2 mb-6">
@@ -125,8 +125,8 @@ const calculateOverallRating = (review: Review) => {
     <template v-if="providerReviews.length !== 0">
       <div class="w-full flex flex-col gap-y-2 justify-center items-start">
         <template v-for="(review, _idx) in providerReviews" :key="_idx">
-          <div class="flex border-b-1 border-slate-200 py-2 gap-y-1 flex-col justify-center w-3/4">
-            <div class="flex items-center gap-x-2">
+          <div class="flex border-b-1 border-slate-200 py-2 gap-y-1 flex-col justify-center w-full">
+            <div class="flex items-center mb-2 gap-x-2">
               <AppRating
                 readonly
                 :model-value="Math.round(calculateOverallRating(review) ?? 0)"
@@ -138,44 +138,46 @@ const calculateOverallRating = (review: Review) => {
               >
             </div>
 
-            <div class="w-full flex justify-between items-center rounded-md">
+            <div
+              class="w-full mb-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 rounded-md"
+            >
               <div class="flex items-center gap-2">
-                <h1>Speed:</h1>
-                <h1>{{ review.speed }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Speed:</h1>
+                <h1 class="text-sm md:text-base">{{ review.speed }} / 5</h1>
               </div>
 
               <div class="flex items-center gap-2">
-                <h1>Price:</h1>
-                <h1>{{ review.price }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Price:</h1>
+                <h1 class="text-sm md:text-base">{{ review.price }} / 5</h1>
               </div>
 
               <div class="flex items-center gap-2">
-                <h1>Value:</h1>
-                <h1>{{ review.value }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Value:</h1>
+                <h1 class="text-sm md:text-base">{{ review.value }} / 5</h1>
               </div>
 
               <div class="flex items-center gap-2">
-                <h1>Setup:</h1>
-                <h1>{{ review.setup }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Setup:</h1>
+                <h1 class="text-sm md:text-base">{{ review.setup }} / 5</h1>
               </div>
 
               <div class="flex items-center gap-2">
-                <h1>Support:</h1>
-                <h1>{{ review.support }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Support:</h1>
+                <h1 class="text-sm md:text-base">{{ review.support }} / 5</h1>
               </div>
 
               <div class="flex items-center gap-2">
-                <h1>Transparency:</h1>
-                <h1>{{ review.transparency }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Transparency:</h1>
+                <h1 class="text-sm md:text-base">{{ review.transparency }} / 5</h1>
               </div>
 
               <div class="flex items-center gap-2">
-                <h1>Reliability:</h1>
-                <h1>{{ review.reliability }} / 5</h1>
+                <h1 class="text-sm md:text-base font-semibold">Reliability:</h1>
+                <h1 class="text-sm md:text-base">{{ review.reliability }} / 5</h1>
               </div>
             </div>
 
-            <div class="w-full">
+            <div class="w-full text-sm md:text-base">
               {{ review.comment }}
             </div>
           </div>
