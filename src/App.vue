@@ -38,7 +38,7 @@ provide(statesKey, allStates)
   <div v-if="appReady" class="w-full min-h-screen flex justify-center">
     <AppNavbar />
     <div
-      class="max-w-[1280px] md:pt-[80px] md:pb-0 pt-[104px] pb-6 max-h-screen overflow-auto px-5 w-full h-full"
+      class="max-w-[1280px] pt-[80px] md:pb-0 pb-20 max-h-screen overflow-auto px-5 w-full h-full"
     >
       <RouterView />
     </div>
