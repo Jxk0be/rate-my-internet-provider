@@ -79,10 +79,12 @@ const fetchCities = async () => {
 const routeToLocation = async () => {
   if (selectedState.value && selectedCity.value) {
     isRouting.value = true
-    const city = selectedCity.value?.name.replace(/\s+/g, '').toLowerCase()
-    const state = selectedState.value?.name.replace(/\s+/g, '').toLowerCase()
+
+    const city = selectedCity.value?.name.replace(/\s+/g, '')
+    const state = selectedState.value?.name.replace(/\s+/g, '')
     const locationRoute = city + '_' + state
-    await router.push(locationRoute)
+
+    await router.push(`/${locationRoute}`)
     isSearchVisible.value = false
     isRouting.value = false
   }

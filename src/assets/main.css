@@ -1,7 +1,7 @@
 @import './base.css';
-@import "tailwindcss";
-@import "tailwindcss-primeui";
 @import 'primeicons/primeicons.css';
+@import "tailwindcss-primeui";
+@import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -37,4 +37,4 @@ body {
   border-color: var(--primary-color) !important;
   box-shadow: var(--focus-ring) !important;
 }
-s
+

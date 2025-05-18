@@ -6,7 +6,15 @@ import router from './router'
 import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
 
-import { AutoComplete, Button, Dialog, InputText, ProgressSpinner, Skeleton } from 'primevue'
+import {
+  AutoComplete,
+  Button,
+  Dialog,
+  InputText,
+  ProgressSpinner,
+  Rating,
+  Skeleton,
+} from 'primevue'
 
 const app = createApp(App)
 
@@ -29,6 +37,7 @@ app.component('AppButton', Button)
 app.component('AppDialog', Dialog)
 app.component('AppInputText', InputText)
 app.component('AppProgressSpinner', ProgressSpinner)
+app.component('AppRating', Rating)
 app.component('AppSkeleton', Skeleton)
 
 app.mount('#app')
