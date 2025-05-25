@@ -15,6 +15,7 @@ import {
   ProgressSpinner,
   Rating,
   Skeleton,
+  Textarea,
 } from 'primevue'
 
 const app = createApp(App)
@@ -41,5 +42,6 @@ app.component('AppPaginator', Paginator)
 app.component('AppProgressSpinner', ProgressSpinner)
 app.component('AppRating', Rating)
 app.component('AppSkeleton', Skeleton)
+app.component('AppTextarea', Textarea)
 
 app.mount('#app')
