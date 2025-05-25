@@ -87,8 +87,9 @@ const routeToAddProvider = async () => {
   await router.push({
     path: '/add-provider',
     query: {
-      from: location.value?.toString(), // This is your location param
-      locationName: locationName.value, // Optional: passing the formatted name if you need it
+      from: location.value?.toString(),
+      locationName: locationName.value,
+      locationId: currentLocation.value?.id || null,
     },
   })
 }

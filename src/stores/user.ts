@@ -143,7 +143,6 @@ export const useUserStore = defineStore('user', () => {
       supabase.auth.onAuthStateChange(async (_event, session) => {
         user.value = session?.user ?? null
         await updatePublicUsers(user.value?.id ?? '')
-        console.log(user.value?.email ?? null)
       })
     } catch (error) {
       console.error('Error initializing auth:', error)
