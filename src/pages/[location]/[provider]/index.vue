@@ -204,7 +204,7 @@ const routeToAddReview = async () => {
     </div>
     <!-- Header Section -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
-      <div class="w-full justify-between flex">
+      <div class="w-full justify-between flex sm:flex-row flex-col">
         <div>
           <h1 class="font-bold text-3xl text-gray-900 dark:text-white capitalize mb-2">
             {{ activeProvider.name }}
@@ -225,7 +225,7 @@ const routeToAddReview = async () => {
           </div>
         </div>
 
-        <div class="flex items-start">
+        <div class="flex items-start mb-6 sm:mb-0">
           <button
             @click="routeToAddReview"
             class="cursor-pointer px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
