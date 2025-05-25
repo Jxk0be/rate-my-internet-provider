@@ -118,57 +118,55 @@ const routeToAddProvider = async () => {
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
       <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
 
-      <template v-if="locationProviders.length !== 0">
-        <div class="w-full flex flex-col gap-y-4">
-          <template v-for="(provider, _idx) in locationProviders" :key="_idx">
-            <div
-              @click="() => routeToProvider(provider.id)"
-              class="w-full cursor-pointer flex flex-col justify-center border-b border-gray-200 dark:border-gray-700 last:border-0 last:pb-0 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
-            >
-              <div class="flex gap-x-2 items-center">
-                <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
-                  {{ provider.name }}
-                </h1>
-                <h1 class="text-sm text-gray-500 dark:text-gray-400">
-                  ({{ provider.total_reviews }} reviews)
-                </h1>
-              </div>
-              <div class="flex items-center gap-2">
-                <AppRating
-                  readonly
-                  :model-value="Math.round(provider.overall_rating ?? 0)"
-                  :cancel="false"
-                  class="custom-rating"
-                />
-                <span class="text-sm text-gray-600 dark:text-gray-400">
-                  ({{ (provider.overall_rating ?? 0).toFixed(1) }})
-                </span>
-              </div>
-            </div>
-          </template>
-
+      <div class="w-full flex flex-col gap-y-4">
+        <template v-for="(provider, _idx) in locationProviders" :key="_idx">
           <div
-            @click="routeToAddProvider"
-            class="w-full cursor-pointer flex flex-col justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+            @click="() => routeToProvider(provider.id)"
+            class="w-full cursor-pointer flex flex-col justify-center border-b border-gray-200 dark:border-gray-700 last:border-0 last:pb-0 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
           >
-            <div class="flex items-center justify-between sm:flex-row flex-col">
-              <div>
-                <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
-                  Can't find your provider?
-                </h1>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                  Logged in users can add their provider
-                </div>
-              </div>
-              <button
-                class="cursor-pointer mt-6 sm:mt-0 px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
-              >
-                Add Provider
-              </button>
+            <div class="flex gap-x-2 items-center">
+              <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
+                {{ provider.name }}
+              </h1>
+              <h1 class="text-sm text-gray-500 dark:text-gray-400">
+                ({{ provider.total_reviews }} reviews)
+              </h1>
+            </div>
+            <div class="flex items-center gap-2">
+              <AppRating
+                readonly
+                :model-value="Math.round(provider.overall_rating ?? 0)"
+                :cancel="false"
+                class="custom-rating"
+              />
+              <span class="text-sm text-gray-600 dark:text-gray-400">
+                ({{ (provider.overall_rating ?? 0).toFixed(1) }})
+              </span>
             </div>
           </div>
+        </template>
+
+        <div
+          @click="routeToAddProvider"
+          class="w-full cursor-pointer flex flex-col justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+        >
+          <div class="flex items-center justify-between sm:flex-row flex-col">
+            <div>
+              <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
+                Can't find your provider?
+              </h1>
+              <div class="text-sm text-gray-500 dark:text-gray-400">
+                Logged in users can add their provider
+              </div>
+            </div>
+            <button
+              class="cursor-pointer mt-6 sm:mt-0 px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
+            >
+              Add Provider
+            </button>
+          </div>
         </div>
-      </template>
+      </div>
     </div>
   </div>
 
