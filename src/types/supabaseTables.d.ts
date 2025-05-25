@@ -20,7 +20,9 @@ export interface Provider {
 
 export interface Review {
   id: number
+  created_at: string
   user_id: string | null
+  user_display: string | null
   provider_id: number
   comment: string
   speed: number | null
