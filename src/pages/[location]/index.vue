@@ -122,7 +122,7 @@ const routeToAddProvider = async () => {
           <template v-for="(provider, _idx) in locationProviders" :key="_idx">
             <div
               @click="() => routeToProvider(provider.id)"
-              class="w-full cursor-pointer flex flex-col justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+              class="w-full cursor-pointer flex flex-col justify-center border-b border-gray-200 dark:border-gray-700 last:border-0 last:pb-0 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
             >
               <div class="flex gap-x-2 items-center">
                 <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
@@ -150,7 +150,7 @@ const routeToAddProvider = async () => {
             @click="routeToAddProvider"
             class="w-full cursor-pointer flex flex-col justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
           >
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between sm:flex-row flex-col">
               <div>
                 <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
                   Can't find your provider?
@@ -160,7 +160,7 @@ const routeToAddProvider = async () => {
                 </div>
               </div>
               <button
-                class="cursor-pointer px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
+                class="cursor-pointer mt-6 sm:mt-0 px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
               >
                 Add Provider
               </button>
