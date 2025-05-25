@@ -85,51 +85,81 @@ const routeToProvider = async (provider_id: number) => {
 </script>
 
 <template>
-  <div>
-    <h1 class="font-bold text-2xl mb-3">{{ locationName }}</h1>
-
-    <h1 class="font-semibold text-xl mb-2">List of Providers</h1>
-    <template v-if="locationProviders.length !== 0">
-      <div class="w-full flex flex-col gap-y-2 justify-center items-start">
-        <template v-for="(provider, _idx) in locationProviders" :key="_idx">
-          <div
-            @click="() => routeToProvider(provider.id)"
-            :class="`w-full cursor-pointer flex flex-col justify-center p-2 ${locationProviders.length > 1 && _idx === locationProviders.length - 1 ? '' : 'border-b-1'} border-slate-200 rounded-md`"
-          >
-            <div class="flex gap-x-2 items-center">
-              <h1 class="font-bold mb-1 text-xl capitalize">{{ provider.name }}</h1>
-              <h1 class="text-sm text-gray-600">({{ provider.total_reviews }} reviews)</h1>
-            </div>
-            <div class="flex items-center gap-2">
-              <AppRating
-                readonly
-                :model-value="Math.round(provider.overall_rating ?? 0)"
-                :cancel="false"
-                class="custom-rating"
-              />
-              <span class="text-sm text-gray-600"
-                >({{ (provider.overall_rating ?? 0).toFixed(1) }})</span
-              >
-            </div>
-          </div>
-        </template>
+  <div v-if="!isLoading" class="max-w-7xl location-view mx-auto lg:px-8 pb-8">
+    <div
+      class="bg-white w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
+    >
+      <div
+        class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
+      >
+        <h1 @click="async () => await router.push(`/`)">Home</h1>
       </div>
-    </template>
+
+      <span class="text-lg text-gray-400">/</span>
+      <div
+        class="flex items-center gap-x-2 text-lg font-semibold text-gray-900 dark:text-white capitalize"
+      >
+        <i class="pi pi-map-marker"></i>
+        {{ locationName }}
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+      <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
+      <template v-if="locationProviders.length !== 0">
+        <div class="w-full flex flex-col gap-y-4">
+          <template v-for="(provider, _idx) in locationProviders" :key="_idx">
+            <div
+              @click="() => routeToProvider(provider.id)"
+              class="w-full cursor-pointer flex flex-col justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+            >
+              <div class="flex gap-x-2 items-center">
+                <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
+                  {{ provider.name }}
+                </h1>
+                <h1 class="text-sm text-gray-500 dark:text-gray-400">
+                  ({{ provider.total_reviews }} reviews)
+                </h1>
+              </div>
+              <div class="flex items-center gap-2">
+                <AppRating
+                  readonly
+                  :model-value="Math.round(provider.overall_rating ?? 0)"
+                  :cancel="false"
+                  class="custom-rating"
+                />
+                <span class="text-sm text-gray-600 dark:text-gray-400">
+                  ({{ (provider.overall_rating ?? 0).toFixed(1) }})
+                </span>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
   </div>
 
   <div
     v-if="isRouting || isLoading"
-    class="fixed inset-0 bg-black/30 backdrop-blur-sm z-20 flex items-center justify-center"
+    class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-20 flex items-center justify-center"
   >
     <AppProgressSpinner />
   </div>
 </template>
 
 <style>
-.custom-rating {
-  --p-rating-icon-size: 1rem;
-  --p-rating-icon-color: #d1d5db; /* Color for inactive stars */
-  --p-rating-icon-active-color: #00b8db; /* Color for active stars */
-  --p-rating-gap: 0.25rem; /* Space between stars */
+.location-view {
+  .custom-rating {
+    --p-rating-icon-size: 1.25rem;
+    --p-rating-icon-color: #e5e7eb;
+    --p-rating-icon-active-color: #00b8db;
+    --p-rating-gap: 0.25rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .location-view .custom-rating {
+    --p-rating-icon-size: 1.5rem;
+  }
 }
 </style>
