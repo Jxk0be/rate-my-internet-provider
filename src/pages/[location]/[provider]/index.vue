@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { supabase } from '@/supabase.ts'
 import type { Provider, Review } from '@/types/supabaseTables'
 
 const route = useRoute()
+const router = useRouter()
 const isLoading = ref(false)
 const activeProvider = ref<Provider>({
   id: -1,
@@ -26,7 +27,20 @@ const showAllRatings = ref(false)
 const isSmallScreen = ref(false)
 let checkScreenSize = () => {}
 const expandedReviews = ref<{ [key: number]: boolean }>({})
+const first = ref(0)
+const statIcons = {
+  speed: 'pi-bolt',
+  price: 'pi-dollar',
+  value: 'pi-face-smile',
+  setup: 'pi-wrench',
+  reliability: 'pi-check-circle',
+  support: 'pi-headphones',
+  transparency: 'pi-circle',
+} as const
 
+const paginatedReviews = computed(() => {
+  return reversedReviews.value.slice(first.value, first.value + 8)
+})
 const visibleStats = computed(() => {
   const entries = Object.entries(statsData.value)
   return !isSmallScreen.value || showAllRatings.value ? entries : entries.slice(0, 3)
@@ -161,29 +175,66 @@ const getWordCount = (text: string) => {
 const getFirstWords = (text: string, count: number) => {
   return text.trim().split(/\s+/).slice(0, count).join(' ')
 }
+
+const getIconForStat = (key: string): string => {
+  return statIcons[key as keyof typeof statIcons] || 'pi-circle' // fallback icon
+}
+
+const routeToAddReview = async () => {
+  await router.push(`${route.path}/add-review`)
+}
 </script>
 
 <template>
   <div v-if="!isLoading" class="max-w-7xl provider-view mx-auto lg:px-8 pb-8">
-    <!-- Header Section -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
-      <h1 class="font-bold text-3xl text-gray-900 dark:text-white capitalize mb-2">
+    <div class="bg-white dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6">
+      <div
+        class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
+      >
+        <i class="pi pi-map-marker"></i>
+        <h1 @click="async () => await router.push(`/${route.params.location}`)">
+          {{ locationName }}
+        </h1>
+      </div>
+
+      <span class="text-lg text-gray-400">/</span>
+      <h1 class="text-lg font-semibold text-gray-900 dark:text-white capitalize">
         {{ activeProvider.name }}
       </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">{{ locationName }}</p>
+    </div>
+    <!-- Header Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+      <div class="w-full justify-between flex">
+        <div>
+          <h1 class="font-bold text-3xl text-gray-900 dark:text-white capitalize mb-2">
+            {{ activeProvider.name }}
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">{{ locationName }}</p>
 
-      <!-- Overall Rating -->
-      <div class="flex items-center gap-3 mb-6">
-        <AppRating
-          readonly
-          :model-value="Math.round(activeProvider.overall_rating ?? 0)"
-          :cancel="false"
-          class="custom-rating"
-        />
-        <span class="text-2xl font-semibold text-gray-700 dark:text-gray-300">
-          {{ (activeProvider.overall_rating ?? 0).toFixed(1) }}
-        </span>
+          <!-- Overall Rating -->
+          <div class="flex items-center gap-3 mb-6">
+            <AppRating
+              readonly
+              :model-value="Math.round(activeProvider.overall_rating ?? 0)"
+              :cancel="false"
+              class="custom-rating"
+            />
+            <span class="text-2xl font-semibold text-gray-700 dark:text-gray-300">
+              {{ (activeProvider.overall_rating ?? 0).toFixed(1) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-start">
+          <button
+            @click="routeToAddReview"
+            class="cursor-pointer px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
+          >
+            Add Review
+          </button>
+        </div>
       </div>
+
       <div class="space-y-4">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Rating Details</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -193,7 +244,10 @@ const getFirstWords = (text: string, count: number) => {
             class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4"
           >
             <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-600 dark:text-gray-300 capitalize">
+              <span
+                class="text-sm font-medium gap-x-2 flex items-center text-gray-600 dark:text-gray-300 capitalize"
+              >
+                <i :class="['pi', getIconForStat(key)]"></i>
                 {{ formatLabel(key) }}
               </span>
               <div class="flex items-center gap-2">
@@ -233,7 +287,7 @@ const getFirstWords = (text: string, count: number) => {
       <div class="space-y-6 review-view">
         <template v-if="providerReviews.length !== 0">
           <div
-            v-for="(review, _idx) in reversedReviews"
+            v-for="(review, _idx) in paginatedReviews"
             :key="_idx"
             class="border-b border-gray-200 dark:border-gray-700 last:border-0 pb-6 last:pb-0"
           >
@@ -287,6 +341,14 @@ const getFirstWords = (text: string, count: number) => {
               </p>
             </div>
           </div>
+          <AppPaginator
+            v-if="reversedReviews.length > 8"
+            :rows="8"
+            :total-records="reversedReviews.length"
+            v-model:first="first"
+            class="mt-4"
+            template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+          />
         </template>
       </div>
     </div>

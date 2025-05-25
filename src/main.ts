@@ -11,6 +11,7 @@ import {
   Button,
   Dialog,
   InputText,
+  Paginator,
   ProgressSpinner,
   Rating,
   Skeleton,
@@ -36,6 +37,7 @@ app.component('AppAutocomplete', AutoComplete)
 app.component('AppButton', Button)
 app.component('AppDialog', Dialog)
 app.component('AppInputText', InputText)
+app.component('AppPaginator', Paginator)
 app.component('AppProgressSpinner', ProgressSpinner)
 app.component('AppRating', Rating)
 app.component('AppSkeleton', Skeleton)
