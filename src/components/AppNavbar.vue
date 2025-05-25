@@ -21,8 +21,6 @@ const allCities = ref<City[]>([])
 const citySuggestions = ref<City[]>([])
 const isLoading = ref(false)
 const isRouting = ref(false)
-const loginVisible = ref(false)
-const registerVisible = ref(false)
 const isSearchVisible = ref(false)
 const isMobileMenuOpen = ref(false)
 
@@ -223,7 +221,7 @@ const mobileLogout = async () => {
                   @click="
                     () => {
                       isMobileMenuOpen = false
-                      loginVisible = true
+                      userStore.isLoginVisible = true
                     }
                   "
                   class="text-lg cursor-pointer font-bold text-center py-2 !text-gray-800 dark:!text-white"
@@ -234,7 +232,7 @@ const mobileLogout = async () => {
                   @click="
                     () => {
                       isMobileMenuOpen = false
-                      registerVisible = true
+                      userStore.isRegisterVisible = true
                     }
                   "
                   class="text-lg cursor-pointer font-bold text-center py-2 !text-gray-800 dark:!text-white"
@@ -297,10 +295,10 @@ const mobileLogout = async () => {
           </button>
         </div>
         <div v-else class="flex justify-center items-center gap-x-6">
-          <h1 @click="() => (loginVisible = true)" class="cursor-pointer">Login</h1>
+          <h1 @click="() => (userStore.isLoginVisible = true)" class="cursor-pointer">Login</h1>
 
           <button
-            @click="() => (registerVisible = true)"
+            @click="() => (userStore.isRegisterVisible = true)"
             class="bg-cyan-500 cursor-pointer rounded-[40px] py-1 px-3"
           >
             Register
@@ -324,10 +322,7 @@ const mobileLogout = async () => {
     <AppProgressSpinner />
   </div>
 
-  <LoginRegisterModal
-    v-model:login-visible="loginVisible"
-    v-model:register-visible="registerVisible"
-  />
+  <LoginRegisterModal />
 </template>
 
 <style scoped></style>

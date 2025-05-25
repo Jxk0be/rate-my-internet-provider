@@ -7,6 +7,8 @@ import type { MetaData } from '@/types/user'
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
   const router = useRouter()
+  const isLoginVisible = ref(false)
+  const isRegisterVisible = ref(false)
 
   const username = computed(() => user.value?.user_metadata?.username ?? 'Username')
 
@@ -154,6 +156,8 @@ export const useUserStore = defineStore('user', () => {
   return {
     forgotPassword,
     googleLogin,
+    isLoginVisible,
+    isRegisterVisible,
     login,
     logout,
     register,

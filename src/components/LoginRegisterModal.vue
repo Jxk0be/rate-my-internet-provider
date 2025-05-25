@@ -3,16 +3,6 @@ import { ref } from 'vue'
 import { useUserStore } from '@/stores/user.ts'
 import { Button as AppButton } from 'primevue'
 
-const props = defineProps<{
-  loginVisible: boolean
-  registerVisible: boolean
-}>()
-
-const emit = defineEmits<{
-  'update:loginVisible': [value: boolean]
-  'update:registerVisible': [value: boolean]
-}>()
-
 const userStore = useUserStore()
 const loginEmail = ref('')
 const loginPassword = ref('')
@@ -32,7 +22,7 @@ const handleRegister = async () => {
   })
 
   clearFields()
-  emit('update:registerVisible', false)
+  userStore.isRegisterVisible = false
 }
 
 const handleLogin = async () => {
@@ -41,7 +31,7 @@ const handleLogin = async () => {
   await userStore.login(loginEmail.value, loginPassword.value)
 
   clearFields()
-  emit('update:loginVisible', false)
+  userStore.isLoginVisible = false
 }
 
 const handleForgotPassword = async () => {
@@ -52,11 +42,6 @@ const handleForgotPassword = async () => {
   clearFields()
   isForgotPasswordVisible.value = false
 }
-
-// const forgotClicked = () => {
-//   emit('update:loginVisible', false)
-//   isForgotPasswordVisible.value = true
-// }
 
 const clearFields = () => {
   loginEmail.value = ''
@@ -117,8 +102,8 @@ const clearFields = () => {
   </AppDialog>
 
   <AppDialog
-    :visible="props.loginVisible"
-    @update:visible="(value: boolean) => emit('update:loginVisible', value)"
+    :visible="userStore.isLoginVisible"
+    @update:visible="(value: boolean) => (userStore.isLoginVisible = value)"
     modal
     header="Login"
     :draggable="false"
@@ -164,7 +149,9 @@ const clearFields = () => {
           <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
         </div>
         <div class="relative flex justify-center text-sm">
-          <span class="px-2 text-gray-500 bg-white dark:bg-gray-800">Or continue with</span>
+          <span class="px-2 text-gray-500 dark:text-gray-200 bg-white dark:bg-gray-700 rounded-lg"
+            >Or continue with</span
+          >
         </div>
       </div>
 
@@ -206,7 +193,7 @@ const clearFields = () => {
           label="Cancel"
           severity="secondary"
           text
-          @click="emit('update:loginVisible', false)"
+          @click="() => (userStore.isLoginVisible = false)"
           pt:root:class="px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800"
         />
         <AppButton
@@ -216,12 +203,30 @@ const clearFields = () => {
           pt:root:class="px-4 py-2 rounded-lg !bg-cyan-500 hover:!bg-cyan-600"
         />
       </div>
+
+      <div class="text-center mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <p class="text-gray-600 dark:text-gray-400">
+          Don't have an account?
+          <a
+            href="#"
+            class="text-cyan-500 font-medium ml-1 cursor-pointer"
+            @click.prevent="
+              () => {
+                userStore.isLoginVisible = false
+                userStore.isRegisterVisible = true
+              }
+            "
+          >
+            Create one now
+          </a>
+        </p>
+      </div>
     </div>
   </AppDialog>
 
   <AppDialog
-    :visible="props.registerVisible"
-    @update:visible="(value: boolean) => emit('update:registerVisible', value)"
+    :visible="userStore.isRegisterVisible"
+    @update:visible="(value: boolean) => (userStore.isRegisterVisible = value)"
     modal
     header="Create your account"
     :draggable="false"
@@ -281,7 +286,7 @@ const clearFields = () => {
           label="Cancel"
           severity="secondary"
           text
-          @click="emit('update:registerVisible', false)"
+          @click="() => (userStore.isRegisterVisible = false)"
           pt:root:class="px-4 py-2 rounded-lg hover:!bg-gray-200 dark:hover:!bg-gray-800"
         />
         <AppButton
