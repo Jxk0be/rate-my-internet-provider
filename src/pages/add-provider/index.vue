@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { computed } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
-const provider = computed(() => route.params.provider)
-const providerName = computed(() => route.query.providerName)
-const pastLocation = computed(() => route.query.previousLocation)
+const previousLocation = route.query.from
+const locationName = route.query.locationName
 </script>
 
 <template>
@@ -17,20 +15,15 @@ const pastLocation = computed(() => route.query.previousLocation)
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
       >
-        <i class="pi pi-wifi"></i>
-        <h1
-          class="capitalize"
-          @click="async () => await router.push(`/${pastLocation}/${provider}`)"
-        >
-          {{ providerName }}
-        </h1>
+        <i class="pi pi-map-marker"></i>
+        <h1 @click="async () => await router.push(`/${previousLocation}`)">{{ locationName }}</h1>
       </div>
 
       <span class="text-lg text-gray-400">/</span>
       <div
         class="flex items-center gap-x-2 text-lg font-semibold text-gray-900 dark:text-white capitalize"
       >
-        Add Review
+        Add Provider
       </div>
     </div>
   </div>

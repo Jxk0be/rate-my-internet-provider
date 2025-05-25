@@ -82,6 +82,16 @@ const routeToProvider = async (provider_id: number) => {
     isRouting.value = false
   }
 }
+
+const routeToAddProvider = async () => {
+  await router.push({
+    path: '/add-provider',
+    query: {
+      from: location.value?.toString(), // This is your location param
+      locationName: locationName.value, // Optional: passing the formatted name if you need it
+    },
+  })
+}
 </script>
 
 <template>
@@ -106,6 +116,7 @@ const routeToProvider = async (provider_id: number) => {
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
       <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
+
       <template v-if="locationProviders.length !== 0">
         <div class="w-full flex flex-col gap-y-4">
           <template v-for="(provider, _idx) in locationProviders" :key="_idx">
@@ -134,6 +145,27 @@ const routeToProvider = async (provider_id: number) => {
               </div>
             </div>
           </template>
+
+          <div
+            @click="routeToAddProvider"
+            class="w-full cursor-pointer flex flex-col justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
+                  Can't find your provider?
+                </h1>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  Logged in users can add their provider
+                </div>
+              </div>
+              <button
+                class="cursor-pointer px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
+              >
+                Add Provider
+              </button>
+            </div>
+          </div>
         </div>
       </template>
     </div>

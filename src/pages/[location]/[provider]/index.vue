@@ -181,7 +181,13 @@ const getIconForStat = (key: string): string => {
 }
 
 const routeToAddReview = async () => {
-  await router.push(`${route.path}/add-review`)
+  await router.push({
+    path: `/${location.value}/${providerId.value}/add-review`,
+    query: {
+      providerName: activeProvider.value.name,
+      previousLocation: route.params.location,
+    },
+  })
 }
 </script>
 
