@@ -38,3 +38,7 @@ body {
   box-shadow: var(--focus-ring) !important;
 }
 
+
+.test {
+  border: solid 1px salmon;
+}
