@@ -16,6 +16,16 @@ const reviewData = ref({
   isAnonymous: false,
 })
 const isSaving = ref(false)
+const statIcons = {
+  speed: 'pi-bolt',
+  price: 'pi-dollar',
+  value: 'pi-face-smile',
+  setup: 'pi-wrench',
+  reliability: 'pi-check-circle',
+  support: 'pi-headphones',
+  transparency: 'pi-circle',
+} as const
+
 const provider = computed(() => route.params.provider)
 const providerName = computed(() => route.query.providerName)
 const pastLocation = computed(() => route.query.previousLocation)
@@ -43,9 +53,9 @@ const saveReview = async () => {
 </script>
 
 <template>
-  <div class="max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8">
+  <div class="add-review-view max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8">
     <div
-      class="bg-white w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
+      class="bg-white px-5 w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
     >
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
@@ -89,10 +99,12 @@ const saveReview = async () => {
           >
             <label
               :for="field"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300 capitalize"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 capitalize flex items-center gap-x-2"
             >
+              <i :class="`pi ${statIcons[field as keyof typeof statIcons]}`"></i>
               {{ field }}
             </label>
+
             <AppRating
               v-model="(reviewData as any)[field]"
               :id="field"
@@ -156,18 +168,22 @@ const saveReview = async () => {
 
   [data-pc-section='officon']:hover {
     color: #00b8db !important;
+    border-color: #00b8db !important;
   }
 
   [data-pc-section='onicon']:hover {
     color: #00b8db !important;
+    border-color: #00b8db !important;
   }
 
   [data-pc-section='officon'] {
     color: #00b8db !important;
+    border-color: #00b8db !important;
   }
 
   [data-pc-section='onicon'] {
     color: #00b8db !important;
+    border-color: #00b8db !important;
   }
 
   [data-pc-name='textarea']:focus {
