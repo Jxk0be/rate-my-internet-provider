@@ -69,7 +69,7 @@ const formatLocationName = (loc: Location) => {
                   {{ loc.locationFormatted }}
                 </h2>
                 <span class="text-sm text-nowrap text-gray-500 dark:text-gray-400">
-                  {{ loc.num_of_providers }} provider{{ loc.num_of_providers !== 1 ? 's' : '' }}
+                  {{ loc.num_of_providers }} provider(s)
                 </span>
               </div>
             </router-link>
