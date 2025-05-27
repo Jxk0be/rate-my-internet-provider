@@ -41,7 +41,7 @@ const formatLocationName = (loc: Location) => {
 
 <template>
   <div
-    class="all-providers-view max-w-[1280px] mx-auto pt-[80px] pb-8 w-full min-h-screen bg-gray-50 dark:bg-gray-900"
+    class="all-providers-view min-h-[90vh] max-w-[1280px] mx-auto pt-[80px] pb-8 w-full dark:bg-gray-900"
   >
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="text-center mb-8">
@@ -94,7 +94,6 @@ const formatLocationName = (loc: Location) => {
     >
       <AppProgressSpinner />
     </div>
-
-    <AppFooter />
   </div>
+  <AppFooter />
 </template>

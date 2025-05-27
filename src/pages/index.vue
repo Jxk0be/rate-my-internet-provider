@@ -59,7 +59,7 @@ const routeToLocation = async () => {
 </script>
 
 <template>
-  <div class="relative min-h-[600px] pt-[70px] flex items-center justify-center">
+  <div class="relative min-h-[70vh] pt-[70px] flex items-center justify-center">
     <div
       class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
       :style="{ backgroundImage: `url(${HeroImage})` }"
@@ -103,7 +103,7 @@ const routeToLocation = async () => {
     </div>
   </div>
 
-  <section class="py-16 max-w-[1280px] mx-auto sm:px-5">
+  <section class="py-16 min-h-[30vh] max-w-[1280px] mx-auto sm:px-5">
     <div class="max-w-6xl mx-auto px-4">
       <div class="grid md:grid-cols-2 gap-12">
         <div class="text-center md:text-left">

@@ -195,7 +195,7 @@ const routeToAddReview = async () => {
 <template>
   <div
     v-if="!isLoading"
-    class="max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
+    class="max-w-[1280px] min-h-[75vh] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
   >
     <div
       class="bg-white px-5 dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
