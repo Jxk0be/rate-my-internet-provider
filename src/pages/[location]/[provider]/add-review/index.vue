@@ -43,7 +43,7 @@ const saveReview = async () => {
 </script>
 
 <template>
-  <div class="max-w-7xl add-review-view mx-auto lg:px-8 pb-8">
+  <div class="max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8">
     <div
       class="bg-white w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
     >

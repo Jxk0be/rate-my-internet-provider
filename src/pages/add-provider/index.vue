@@ -66,7 +66,7 @@ const saveProvider = async () => {
 </script>
 
 <template>
-  <div v-if="!isSaving" class="max-w-7xl location-view mx-auto lg:px-8 pb-8">
+  <div v-if="!isSaving" class="max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8">
     <div
       class="bg-white w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
     >
@@ -127,7 +127,7 @@ const saveProvider = async () => {
       <div class="mt-6 flex justify-end space-x-4">
         <button
           type="button"
-          class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          class="px-4 cursor-pointer py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
           @click="router.push(`/${previousLocation}`)"
         >
           Cancel

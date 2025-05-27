@@ -71,6 +71,7 @@ const fetchCities = async () => {
   if (selectedState.value) {
     allCities.value = await loadNewCities(selectedState.value)
   }
+  allCities.value = allCities.value.filter((cty) => !cty.name.toLowerCase().includes('county'))
   isLoading.value = false
 }
 
@@ -154,7 +155,7 @@ const mobileLogout = async () => {
           </AppAutocomplete>
           <AppAutocomplete
             v-model="selectedCity"
-            placeholder="Your city"
+            :placeholder="!selectedState ? 'Pick your state first' : 'Your city'"
             class="w-1/3"
             :loading="isLoading"
             fluid

@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { supabase } from '@/supabase.ts'
 import type { Provider, Review } from '@/types/supabaseTables'
+import AppFooter from '@/components/AppFooter.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -192,8 +193,13 @@ const routeToAddReview = async () => {
 </script>
 
 <template>
-  <div v-if="!isLoading" class="max-w-7xl provider-view mx-auto lg:px-8 pb-8">
-    <div class="bg-white dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6">
+  <div
+    v-if="!isLoading"
+    class="max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
+  >
+    <div
+      class="bg-white px-5 dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
+    >
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
       >
@@ -367,6 +373,8 @@ const routeToAddReview = async () => {
   >
     <AppProgressSpinner />
   </div>
+
+  <AppFooter />
 </template>
 
 <style>
