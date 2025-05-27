@@ -1,6 +1,8 @@
 export interface Location {
   id: number
   location: string
+  locationFormatted?: string
+  num_of_providers: number
 }
 
 export interface Provider {

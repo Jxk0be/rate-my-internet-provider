@@ -24,7 +24,7 @@ declare module 'vue-router/auto-routes' {
     '/[location]/[provider]/add-review/': RouteRecordInfo<'/[location]/[provider]/add-review/', '/:location/:provider/add-review', { location: ParamValue<true>, provider: ParamValue<true> }, { location: ParamValue<false>, provider: ParamValue<false> }>,
     '/account/': RouteRecordInfo<'/account/', '/account', Record<never, never>, Record<never, never>>,
     '/add-provider/': RouteRecordInfo<'/add-provider/', '/add-provider', Record<never, never>, Record<never, never>>,
-    '/all-providers/': RouteRecordInfo<'/all-providers/', '/all-providers', Record<never, never>, Record<never, never>>,
+    '/all-locations/': RouteRecordInfo<'/all-locations/', '/all-locations', Record<never, never>, Record<never, never>>,
     '/privacy-policy/': RouteRecordInfo<'/privacy-policy/', '/privacy-policy', Record<never, never>, Record<never, never>>,
     '/reset-password/': RouteRecordInfo<'/reset-password/', '/reset-password', Record<never, never>, Record<never, never>>,
     '/terms-and-conditions/': RouteRecordInfo<'/terms-and-conditions/', '/terms-and-conditions', Record<never, never>, Record<never, never>>,

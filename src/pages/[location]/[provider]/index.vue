@@ -204,8 +204,16 @@ const routeToAddReview = async () => {
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
       >
         <i class="pi pi-map-marker"></i>
-        <h1 @click="async () => await router.push(`/${route.params.location}`)">
-          {{ locationName }}
+        <h1>
+          <router-link
+            :to="{
+              path: `/${route.params.location}`,
+              query: {
+                from: 'search',
+              },
+            }"
+            >{{ locationName }}</router-link
+          >
         </h1>
       </div>
 

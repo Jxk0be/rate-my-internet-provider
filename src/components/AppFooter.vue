@@ -9,6 +9,11 @@
         <div>
           <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
           <ul class="space-y-2">
+            <li>
+              <router-link to="/all-locations" class="hover:text-cyan-400"
+                >All Locations</router-link
+              >
+            </li>
             <li><router-link to="/account" class="hover:text-cyan-400">Account</router-link></li>
             <li>
               <router-link to="/privacy-policy" class="hover:text-cyan-400"
@@ -30,3 +35,4 @@
     </div>
   </footer>
 </template>
+<script setup lang="ts"></script>

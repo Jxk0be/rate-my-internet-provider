@@ -83,7 +83,11 @@ const routeToLocation = async () => {
     const state = selectedState.value?.name.replace(/\s+/g, '')
     const locationRoute = city + '_' + state
 
-    await router.push(`/${locationRoute}`)
+    await router.push({
+      path: `/${locationRoute}`,
+      query: { from: 'search' },
+    })
+
     isSearchVisible.value = false
     isRouting.value = false
   }

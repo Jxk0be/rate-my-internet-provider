@@ -28,6 +28,8 @@ watch(
   async () => {
     if (!location.value) return
 
+    if (route.query.from !== 'search') return
+
     const locationString = location.value.toString()
 
     isLoading.value = true
