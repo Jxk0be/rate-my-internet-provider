@@ -100,7 +100,7 @@ const routeToLocation = async () => {
     </div>
   </div>
 
-  <section class="py-16 bg-white max-w-[1280px] mx-auto sm:px-5">
+  <section class="py-16 max-w-[1280px] mx-auto sm:px-5">
     <div class="max-w-6xl mx-auto px-4">
       <div class="grid md:grid-cols-2 gap-12">
         <div class="text-center md:text-left">
