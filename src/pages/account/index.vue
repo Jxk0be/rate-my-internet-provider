@@ -9,8 +9,10 @@ definePage({
 </script>
 
 <template>
-  <div class="flex w-full justify-center items-center flex-col ">
-    <AppTabs value="0" class=" w-full">
+  <div
+    class="flex max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8 w-full justify-center items-center flex-col"
+  >
+    <AppTabs value="0" class="w-full">
       <AppTabList>
         <AppTab value="0">Profile</AppTab>
         <AppTab value="1">Ratings</AppTab>
@@ -18,13 +20,13 @@ definePage({
       </AppTabList>
       <AppTabPanels>
         <AppTabPanel value="0">
-          <ProfileTab/>
+          <ProfileTab />
         </AppTabPanel>
         <AppTabPanel value="1">
-          <RatingsTab/>
+          <RatingsTab />
         </AppTabPanel>
         <AppTabPanel value="2">
-          <SavedProvidersTab/>
+          <SavedProvidersTab />
         </AppTabPanel>
       </AppTabPanels>
     </AppTabs>
