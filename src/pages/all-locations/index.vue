@@ -13,6 +13,7 @@ const first = ref(0)
 const paginatedLocations = computed(() => {
   return allLocations.value.slice(first.value, first.value + 25)
 })
+
 onMounted(async () => {
   isLoading.value = true
   try {
@@ -27,59 +28,73 @@ onMounted(async () => {
   } catch (error) {
     console.log('Could not fetch all locations:', error)
   }
-
   isLoading.value = false
 })
 
 const formatLocationName = (loc: Location) => {
   if (!loc.location) return ''
-
   const [cityPart, state] = loc.location.toString().split('_')
   const city = cityPart.replace(/([A-Z])/g, ' $1').trim()
-
   return `${city}, ${state}`
 }
 </script>
 
 <template>
-  <div class="all-providers-view px-5 max-w-[1280px] mx-auto pt-[80px] location-view lg:px-8 pb-8">
-    <h1 class="font-bold text-3xl text-gray-900 dark:text-white capitalize mb-2">All Locations</h1>
-    <template v-if="paginatedLocations.length !== 0">
-      <div class="flex flex-col justify-center gap-y-2">
-        <template v-for="(loc, _idx) in paginatedLocations" :key="_idx">
-          <h1
-            v-if="loc.num_of_providers > 0"
-            class="font-semibold text-md capitalize text-gray-900 dark:text-white"
-          >
-            <router-link
-              :to="{
-                path: `/${loc.location}`,
-                query: {
-                  from: 'search',
-                },
-              }"
-              >{{ loc.locationFormatted }}</router-link
-            >
-          </h1>
-        </template>
-      </div>
-    </template>
-    <AppPaginator
-      v-if="allLocations.length > 25"
-      :rows="8"
-      :total-records="allLocations.length"
-      v-model:first="first"
-      class="mt-4"
-      template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
-    />
-  </div>
-
   <div
-    v-if="isLoading || isRouting"
-    class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-20 flex items-center justify-center"
+    class="all-providers-view max-w-[1280px] mx-auto pt-[80px] pb-8 w-full min-h-screen bg-gray-50 dark:bg-gray-900"
   >
-    <AppProgressSpinner />
-  </div>
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
+          Available Locations
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300">Browse providers by location</p>
+      </div>
 
-  <AppFooter />
+      <div
+        v-if="paginatedLocations.length !== 0"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6"
+      >
+        <div class="grid grid-cols-1 gap-4">
+          <template v-for="(loc, idx) in paginatedLocations" :key="idx">
+            <router-link
+              v-if="loc.num_of_providers > 0"
+              :to="{ path: `/${loc.location}`, query: { from: 'search' } }"
+              class="block p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+            >
+              <div class="flex items-center justify-between">
+                <h2
+                  class="text-lg font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400"
+                >
+                  {{ loc.locationFormatted }}
+                </h2>
+                <span class="text-sm text-nowrap text-gray-500 dark:text-gray-400">
+                  {{ loc.num_of_providers }} provider{{ loc.num_of_providers !== 1 ? 's' : '' }}
+                </span>
+              </div>
+            </router-link>
+          </template>
+        </div>
+      </div>
+
+      <AppPaginator
+        v-if="allLocations.length > 25"
+        :rows="8"
+        :total-records="allLocations.length"
+        v-model:first="first"
+        class="mt-8"
+        template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+      />
+    </div>
+
+    <!-- Loading Overlay -->
+    <div
+      v-if="isLoading || isRouting"
+      class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-20 flex items-center justify-center"
+    >
+      <AppProgressSpinner />
+    </div>
+
+    <AppFooter />
+  </div>
 </template>
