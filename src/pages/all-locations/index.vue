@@ -40,9 +40,7 @@ const formatLocationName = (loc: Location) => {
 </script>
 
 <template>
-  <div
-    class="all-providers-view min-h-[90vh] max-w-[1280px] mx-auto pt-[80px] pb-8 w-full bg-white dark:bg-gray-800"
-  >
+  <div class="all-providers-view min-h-[90vh] max-w-[1280px] mx-auto pt-[80px] pb-8 w-full">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="text-center mb-8">
         <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
