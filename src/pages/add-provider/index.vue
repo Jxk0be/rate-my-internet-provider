@@ -63,6 +63,13 @@ const saveProvider = async () => {
   if (newProvider) await router.push(`/${previousLocation}/${newProvider?.id}`)
   else await router.push(`/${previousLocation}`)
 }
+
+const routeToPreviousLocation = async () => {
+  await router.push({
+    path: `/${previousLocation}`,
+    query: { from: 'search' },
+  })
+}
 </script>
 
 <template>
@@ -128,7 +135,7 @@ const saveProvider = async () => {
         <button
           type="button"
           class="px-4 cursor-pointer py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-          @click="router.push(`/${previousLocation}`)"
+          @click="routeToPreviousLocation"
         >
           Cancel
         </button>
