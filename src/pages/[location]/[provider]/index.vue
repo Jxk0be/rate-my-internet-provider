@@ -40,7 +40,7 @@ const statIcons = {
 } as const
 
 const paginatedReviews = computed(() => {
-  return reversedReviews.value.slice(first.value, first.value + 8)
+  return sequentialTime.value.slice(first.value, first.value + 8)
 })
 const visibleStats = computed(() => {
   const entries = Object.entries(statsData.value)
@@ -64,7 +64,11 @@ const statsData = computed(() => ({
   transparency: activeProvider.value.overall_transparency,
   reliability: activeProvider.value.overall_reliability,
 }))
-const reversedReviews = computed(() => [...providerReviews.value].reverse())
+const sequentialTime = computed(() =>
+  [...providerReviews.value].sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+  ),
+)
 
 onMounted(() => {
   checkScreenSize = () => {
@@ -305,7 +309,7 @@ const routeToAddReview = async () => {
       </div>
 
       <div class="space-y-6 review-view">
-        <template v-if="providerReviews.length !== 0">
+        <template v-if="paginatedReviews.length !== 0">
           <div
             v-for="(review, _idx) in paginatedReviews"
             :key="_idx"
@@ -362,9 +366,9 @@ const routeToAddReview = async () => {
             </div>
           </div>
           <AppPaginator
-            v-if="reversedReviews.length > 8"
+            v-if="sequentialTime.length > 8"
             :rows="8"
-            :total-records="reversedReviews.length"
+            :total-records="sequentialTime.length"
             v-model:first="first"
             class="mt-4"
             template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
