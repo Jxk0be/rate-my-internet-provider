@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
+import { useUserStore } from '@/stores/user.ts'
+import { supabase } from '@/supabase.ts'
+import { Filter } from 'bad-words'
 
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserStore()
 const reviewData = ref({
   reliability: null,
   speed: null,
@@ -25,13 +29,14 @@ const statIcons = {
   support: 'pi-headphones',
   transparency: 'pi-circle',
 } as const
+const filter = new Filter()
+const sanitizedComment = ref('')
 
 const provider = computed(() => route.params.provider)
 const providerName = computed(() => route.query.providerName)
 const pastLocation = computed(() => route.query.previousLocation)
 
 const saveReview = async () => {
-  console.log(reviewData.value)
   if (
     !reviewData.value.value ||
     !reviewData.value.reliability ||
@@ -45,7 +50,43 @@ const saveReview = async () => {
     return
 
   isSaving.value = true
-  console.log(reviewData.value)
+
+  try {
+    sanitizedComment.value = filter.clean(reviewData.value.comment)
+
+    if (sanitizedComment.value !== reviewData.value.comment) {
+      reviewData.value.comment = sanitizedComment.value
+    }
+  } catch (error) {
+    console.error('Error filtering text:', error)
+  }
+
+  const { error: error } = await supabase
+    .from('reviews')
+    .insert([
+      {
+        provider_id: provider.value,
+        comment: reviewData.value.comment,
+        user_id: reviewData.value.isAnonymous ? null : userStore.user?.id,
+        reliability: reviewData.value.reliability,
+        speed: reviewData.value.speed,
+        price: reviewData.value.price,
+        value: reviewData.value.value,
+        setup: reviewData.value.setup,
+        support: reviewData.value.support,
+        transparency: reviewData.value.transparency,
+        user_display: reviewData.value.isAnonymous
+          ? null
+          : (userStore.user?.user_metadata?.name ?? userStore.user?.user_metadata?.username),
+      },
+    ])
+    .select()
+    .single()
+
+  if (error) {
+    console.log('Adding review error:', error)
+    return
+  }
 
   isSaving.value = false
   await router.push(`/${pastLocation.value}/${provider.value}`)
@@ -129,7 +170,7 @@ const saveReview = async () => {
         </div>
 
         <!-- Anonymous Checkbox -->
-        <div class="flex items-center">
+        <div v-if="userStore.user" class="flex items-center">
           <input
             type="checkbox"
             v-model="reviewData.isAnonymous"
