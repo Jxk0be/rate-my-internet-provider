@@ -195,7 +195,7 @@ const routeToAddReview = async () => {
 <template>
   <div
     v-if="!isLoading"
-    class="max-w-[1280px] min-h-[75vh] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
+    class="max-w-[1280px] provider-view min-h-[75vh] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
   >
     <div
       class="bg-white px-5 dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
@@ -349,7 +349,7 @@ const routeToAddReview = async () => {
                   Read more
                 </button>
               </p>
-              <p v-else>
+              <p class="preserved-text" v-else>
                 {{ review.comment }}
                 <button
                   v-if="getWordCount(review.comment) > 40"
@@ -411,5 +411,10 @@ const routeToAddReview = async () => {
   .review-view .custom-rating {
     --p-rating-icon-size: 1rem;
   }
+}
+
+.preserved-text {
+  white-space: pre-wrap; /* Preserves line breaks and spaces */
+  word-wrap: break-word; /* Ensures long words don't overflow */
 }
 </style>
