@@ -4,6 +4,9 @@ import { useUserStore } from '@/stores/user.ts'
 
 const router = createRouter({
   history: createWebHistory('/'),
+  scrollBehavior() {
+    return { top: 0 }
+  },
   routes,
 })
 
