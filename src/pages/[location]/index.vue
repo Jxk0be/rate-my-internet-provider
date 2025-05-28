@@ -13,6 +13,11 @@ const isRouting = ref(false)
 const currentLocation = ref<Location | null>(null)
 const locationProviders = ref<Provider[]>([])
 
+const sortedLocations = computed(() => {
+  return [...locationProviders.value].sort(
+    (a, b) => (b.total_reviews ?? 0) - (a.total_reviews ?? 0),
+  )
+})
 const location = computed(() => route.params.location)
 const locationName = computed(() => {
   if (!location.value) return ''
@@ -125,7 +130,7 @@ const routeToAddProvider = async () => {
       <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
 
       <div class="w-full flex flex-col gap-y-4">
-        <template v-for="(provider, _idx) in locationProviders" :key="_idx">
+        <template v-for="(provider, _idx) in sortedLocations" :key="_idx">
           <div
             @click="() => routeToProvider(provider.id)"
             class="w-full cursor-pointer flex flex-col justify-center border-b border-gray-200 dark:border-gray-700 last:border-0 last:pb-0 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
