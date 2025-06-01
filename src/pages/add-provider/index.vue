@@ -121,7 +121,8 @@ const routeToPreviousLocation = async () => {
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Provider Name
           </label>
-          <input
+          <AppInputText
+            :maxlength="35"
             v-model="providerName"
             type="text"
             required

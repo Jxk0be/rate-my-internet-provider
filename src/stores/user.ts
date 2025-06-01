@@ -71,16 +71,6 @@ export const useUserStore = defineStore('user', () => {
     await router.push('/')
   }
 
-  const forgotPassword = async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
-
-    if (error) {
-      console.log('Password Reset Error:', error)
-      return false
-    }
-    return true
-  }
-
   const updatePassword = async (password: string) => {
     const { error } = await supabase.auth.updateUser({
       password: password,
@@ -153,7 +143,6 @@ export const useUserStore = defineStore('user', () => {
   initialize().then(() => console.log('initialized'))
 
   return {
-    forgotPassword,
     googleLogin,
     isLoginVisible,
     isRegisterVisible,

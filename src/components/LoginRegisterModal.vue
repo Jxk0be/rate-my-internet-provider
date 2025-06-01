@@ -10,8 +10,6 @@ const registerEmail = ref('')
 const registerPassword = ref('')
 const registerUsername = ref('')
 const registerName = ref('')
-const isForgotPasswordVisible = ref(false)
-const forgotPasswordEmail = ref('')
 
 const handleRegister = async () => {
   if (registerEmail.value === '' || registerPassword.value === '') return
@@ -34,73 +32,15 @@ const handleLogin = async () => {
   userStore.isLoginVisible = false
 }
 
-const handleForgotPassword = async () => {
-  if (forgotPasswordEmail.value === '') return
-
-  await userStore.forgotPassword(forgotPasswordEmail.value)
-
-  clearFields()
-  isForgotPasswordVisible.value = false
-}
-
 const clearFields = () => {
   loginEmail.value = ''
   loginPassword.value = ''
   registerEmail.value = ''
   registerPassword.value = ''
-  forgotPasswordEmail.value = ''
 }
 </script>
 
 <template>
-  <AppDialog
-    :visible="isForgotPasswordVisible"
-    @update:visible="(value: boolean) => (isForgotPasswordVisible = value)"
-    modal
-    header="Reset Password"
-    :draggable="false"
-    class="sm:max-w-md w-[95%]"
-    pt:root:class="border-0 rounded-xl"
-    pt:header:class="text-2xl font-bold pb-2"
-    pt:content:class="px-6 py-4"
-    pt:mask:class="backdrop-blur-sm"
-  >
-    <div class="flex flex-col gap-y-6">
-      <!-- Email Field -->
-      <div class="flex flex-col gap-y-2">
-        <label
-          for="forgot-password-email"
-          class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-        >
-          Email
-        </label>
-        <AppInputText
-          id="forgot-password-email"
-          v-model="forgotPasswordEmail"
-          class="w-full"
-          pt:root:class="rounded-lg"
-        />
-      </div>
-
-      <!-- Actions -->
-      <div class="flex justify-end gap-x-3">
-        <AppButton
-          label="Cancel"
-          severity="secondary"
-          text
-          @click="() => (isForgotPasswordVisible = false)"
-          pt:root:class="px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800"
-        />
-        <AppButton
-          label="Send Reset Link"
-          severity="primary"
-          @click="handleForgotPassword"
-          pt:root:class="px-4 py-2 rounded-lg !bg-cyan-500 hover:!bg-cyan-600"
-        />
-      </div>
-    </div>
-  </AppDialog>
-
   <AppDialog
     :visible="userStore.isLoginVisible"
     @update:visible="(value: boolean) => (userStore.isLoginVisible = value)"
@@ -120,6 +60,7 @@ const clearFields = () => {
           Email
         </label>
         <AppInputText
+          :maxlength="35"
           id="login-email"
           v-model="loginEmail"
           class="w-full"
@@ -180,14 +121,6 @@ const clearFields = () => {
         </svg>
         Sign in with Google
       </button>
-      <!--  I don't believe we can send many emails, so I'm going to comment this out for now -->
-      <!--      <button-->
-      <!--        @click="forgotClicked"-->
-      <!--        class="!text-cyan-500 w-[140px] !bg-transparent cursor-pointer !border-none"-->
-      <!--      >-->
-      <!--        forgot password?-->
-      <!--      </button>-->
-      <!-- Actions -->
       <div class="flex justify-end gap-x-3">
         <AppButton
           label="Cancel"
@@ -242,6 +175,7 @@ const clearFields = () => {
           Username
         </label>
         <AppInputText
+          :maxlength="25"
           id="username"
           v-model="registerUsername"
           class="w-full"
@@ -254,6 +188,7 @@ const clearFields = () => {
           Email
         </label>
         <AppInputText
+          :maxlength="35"
           id="email"
           v-model="registerEmail"
           class="w-full"
@@ -278,7 +213,13 @@ const clearFields = () => {
         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
           Preferred Name
         </label>
-        <AppInputText id="name" v-model="registerName" class="w-full" pt:root:class="rounded-lg" />
+        <AppInputText
+          :maxlength="25"
+          id="name"
+          v-model="registerName"
+          class="w-full"
+          pt:root:class="rounded-lg"
+        />
       </div>
 
       <div class="flex justify-end gap-3 pt-4">

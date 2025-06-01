@@ -29,6 +29,16 @@ const statIcons = {
   support: 'pi-headphones',
   transparency: 'pi-circle',
 } as const
+const categoryExplanations = {
+  reliability: 'How dependable is the service? Rate the uptime and consistency of performance.',
+  speed: 'How fast are the connection speeds? Consider both download and upload speeds.',
+  price: 'How reasonable is the pricing compared to similar services and features offered?',
+  value: 'How good is the overall value for money, considering all features and service quality?',
+  setup: 'How smooth was the installation and initial setup process?',
+  support: 'How helpful and responsive is their customer support team?',
+  transparency: 'How clear and honest are they about their services, pricing, and policies?',
+} as const
+
 const filter = new Filter()
 const sanitizedComment = ref('')
 
@@ -152,21 +162,28 @@ const saveReview = async () => {
               :cancel="false"
               class="custom-rating"
             />
+
+            <p class="text-xs text-gray-500 dark:text-gray-400 italic">
+              {{ categoryExplanations[field as keyof typeof categoryExplanations] }}
+            </p>
           </div>
         </div>
 
-        <!-- Comment Field -->
         <div class="space-y-2">
           <label for="comment" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Your Review
           </label>
           <AppTextarea
+            :maxlength="3000"
             v-model="reviewData.comment"
             id="comment"
             rows="4"
             class="w-full"
             placeholder="Share your experience..."
           />
+          <div class="text-sm text-gray-500 dark:text-gray-400 text-right">
+            {{ 3000 - reviewData.comment.length }} characters remaining
+          </div>
         </div>
 
         <!-- Anonymous Checkbox -->
