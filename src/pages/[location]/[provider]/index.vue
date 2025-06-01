@@ -255,7 +255,7 @@ const routeToAddReview = async () => {
             @click="routeToAddReview"
             class="cursor-pointer px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
           >
-            Add Review
+            Add Rating
           </button>
         </div>
       </div>

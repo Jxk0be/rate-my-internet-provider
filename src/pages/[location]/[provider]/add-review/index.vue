@@ -126,7 +126,7 @@ const saveReview = async () => {
       <div
         class="flex items-center gap-x-2 text-lg font-semibold text-gray-900 dark:text-white capitalize"
       >
-        Add Review
+        Add Rating
       </div>
     </div>
 
@@ -173,7 +173,7 @@ const saveReview = async () => {
 
         <div class="space-y-2">
           <label for="comment" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Your Review
+            Your Rating
           </label>
           <AppTextarea
             :maxlength="3000"
@@ -209,7 +209,7 @@ const saveReview = async () => {
             class="px-6 cursor-pointer py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <i v-if="isSaving" class="pi pi-spinner pi-spin mr-2"></i>
-            {{ isSaving ? 'Submitting...' : 'Submit Review' }}
+            {{ isSaving ? 'Submitting...' : 'Submit Rating' }}
           </button>
         </div>
       </form>

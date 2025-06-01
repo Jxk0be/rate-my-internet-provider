@@ -74,7 +74,7 @@ const handleDelete = async () => {
 
 <template>
   <div class="max-w-[1280px] mx-auto">
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Your Reviews</h2>
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Your Ratings</h2>
 
     <!-- Loading State -->
     <div v-if="isLoading" class="flex justify-center py-8">

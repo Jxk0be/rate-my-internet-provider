@@ -127,7 +127,7 @@ const routeToAddProvider = async () => {
     </div>
 
     <div class="dark:bg-black/20 rounded-lg shadow-sm p-6">
-      <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
+      <h1 class="font-semibold text-xl mb-4">Providers</h1>
 
       <div class="w-full flex flex-col gap-y-4">
         <template v-for="(provider, _idx) in sortedLocations" :key="_idx">
