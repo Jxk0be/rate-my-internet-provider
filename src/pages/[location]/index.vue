@@ -109,7 +109,7 @@ const routeToAddProvider = async () => {
     class="max-w-[1280px] min-h-[75vh] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
   >
     <div
-      class="bg-white w-full px-5 dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
+      class="w-full px-5 dark:bg-black/20 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
     >
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
@@ -126,7 +126,7 @@ const routeToAddProvider = async () => {
       </div>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+    <div class="dark:bg-black/20 rounded-lg shadow-sm p-6">
       <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
 
       <div class="w-full flex flex-col gap-y-4">

@@ -106,7 +106,7 @@ const saveReview = async () => {
 <template>
   <div class="add-review-view max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8">
     <div
-      class="bg-white px-5 w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
+      class="px-5 w-full dark:bg-black/20 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
     >
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
@@ -129,7 +129,7 @@ const saveReview = async () => {
     </div>
 
     <!-- Review Form -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+    <div class="dark:bg-black/20 rounded-lg shadow-sm p-6">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Rate Your Experience</h2>
 
       <form @submit.prevent="saveReview" class="space-y-6">
@@ -150,7 +150,7 @@ const saveReview = async () => {
           >
             <label
               :for="field"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300 capitalize flex items-center gap-x-2"
+              class="block text-sm font-medium text-gray-700 dark:text-white capitalize flex items-center gap-x-2"
             >
               <i :class="`pi ${statIcons[field as keyof typeof statIcons]}`"></i>
               {{ field }}

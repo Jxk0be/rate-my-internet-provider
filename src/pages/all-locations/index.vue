@@ -49,10 +49,7 @@ const formatLocationName = (loc: Location) => {
         <p class="text-lg text-gray-600 dark:text-gray-300">Browse providers by location</p>
       </div>
 
-      <div
-        v-if="paginatedLocations.length !== 0"
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6"
-      >
+      <div v-if="paginatedLocations.length !== 0" class="dark:bg-black/20 rounded-lg shadow-sm p-6">
         <div class="grid grid-cols-1 gap-4">
           <template v-for="(loc, idx) in paginatedLocations" :key="idx">
             <router-link

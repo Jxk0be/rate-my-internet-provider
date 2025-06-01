@@ -74,9 +74,7 @@ const routeToPreviousLocation = async () => {
 
 <template>
   <div v-if="!isSaving" class="max-w-[1280px] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8">
-    <div
-      class="bg-white w-full dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
-    >
+    <div class="w-full dark:bg-black/20 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6">
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
       >
@@ -93,7 +91,7 @@ const routeToPreviousLocation = async () => {
     </div>
 
     <!-- Authentication check -->
-    <div v-if="!userStore.user" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+    <div v-if="!userStore.user" class="dark:bg-black/20 rounded-lg shadow-sm p-6">
       <div class="text-center">
         <i class="pi pi-lock text-4xl text-gray-400 mb-4"></i>
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Login Required</h2>
@@ -111,11 +109,7 @@ const routeToPreviousLocation = async () => {
       </div>
     </div>
 
-    <form
-      v-else
-      @submit.prevent="saveProvider"
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6"
-    >
+    <form v-else @submit.prevent="saveProvider" class="dark:bg-black/20 rounded-lg shadow-sm p-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-2">
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">

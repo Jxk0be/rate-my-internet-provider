@@ -201,9 +201,7 @@ const routeToAddReview = async () => {
     v-if="!isLoading"
     class="max-w-[1280px] provider-view min-h-[75vh] mx-auto sm:px-5 pt-[80px] location-view lg:px-8 pb-8"
   >
-    <div
-      class="bg-white px-5 dark:bg-gray-800 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6"
-    >
+    <div class="px-5 dark:bg-black/20 rounded-lg flex gap-x-3 items-center shadow-sm p-3 mb-6">
       <div
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
       >
@@ -227,7 +225,7 @@ const routeToAddReview = async () => {
       </h1>
     </div>
     <!-- Header Section -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+    <div class="dark:bg-black/20 rounded-lg shadow-sm p-6 mb-6">
       <div class="w-full justify-between flex sm:flex-row flex-col">
         <div>
           <h1 class="font-bold text-3xl text-gray-900 dark:text-white capitalize mb-2">
@@ -243,8 +241,11 @@ const routeToAddReview = async () => {
               :cancel="false"
               class="custom-rating"
             />
-            <span class="text-2xl font-semibold text-gray-700 dark:text-gray-300">
-              {{ (activeProvider.overall_rating ?? 0).toFixed(1) }}
+            <span class="text-lg font-bold text-gray-500 dark:text-gray-300">
+              <span class="text-3xl text-black dark:text-white">{{
+                (activeProvider.overall_rating ?? 0).toFixed(1)
+              }}</span>
+              / 5
             </span>
           </div>
         </div>
@@ -265,7 +266,7 @@ const routeToAddReview = async () => {
           <div
             v-for="[key, value] in visibleStats"
             :key="key"
-            class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4"
+            class="dark:bg-gray-700/20 rounded-lg p-4"
           >
             <div class="flex items-center justify-between">
               <span
@@ -300,7 +301,7 @@ const routeToAddReview = async () => {
     </div>
 
     <!-- Reviews Section -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+    <div class="dark:bg-black/20 rounded-lg shadow-sm p-6">
       <div class="flex flex-col mb-6">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
           {{ providerReviews.length }} Customer Reviews
