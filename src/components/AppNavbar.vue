@@ -8,6 +8,7 @@ import LoginRegisterModal from '@/components/LoginRegisterModal.vue'
 import { useUserStore } from '@/stores/user.ts'
 import { Button as AppButton } from 'primevue'
 import { useRouter } from 'vue-router'
+import Logo from '@/assets/logo.png'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -112,9 +113,7 @@ const mobileLogout = async () => {
       </AppButton>
 
       <div class="flex gap-x-2 pl-[20px] justify-center items-center">
-        <h1 class="text-lg text-nowrap font-semibold">
-          rate my <span class="text-cyan-500">internet</span>
-        </h1>
+        <img class="w-[95px]" :src="Logo" alt="rmi-logo" />
 
         <AppButton
           v-if="!isSearchVisible"
@@ -253,7 +252,7 @@ const mobileLogout = async () => {
 
     <div class="max-w-[1280px] hidden w-full h-full px-5 md:flex justify-between items-center">
       <RouterLink class="text-nowrap capitalize font-semibold text-lg cursor-pointer" to="/">
-        rate my <span class="text-cyan-500">internet</span>
+        <img class="w-[150px]" :src="Logo" alt="rmi-logo" />
       </RouterLink>
 
       <div class="w-full flex items-center justify-center gap-x-4">
