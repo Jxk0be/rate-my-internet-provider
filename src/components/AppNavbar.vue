@@ -113,7 +113,7 @@ const mobileLogout = async () => {
       </AppButton>
 
       <div class="flex gap-x-2 pl-[20px] justify-center items-center">
-        <img class="w-[95px]" :src="Logo" alt="rmi-logo" />
+        <img class="w-[80px]" :src="Logo" alt="rmi-logo" />
 
         <AppButton
           v-if="!isSearchVisible"
@@ -252,7 +252,7 @@ const mobileLogout = async () => {
 
     <div class="max-w-[1280px] hidden w-full h-full px-5 md:flex justify-between items-center">
       <RouterLink class="text-nowrap capitalize font-semibold text-lg cursor-pointer" to="/">
-        <img class="w-[150px]" :src="Logo" alt="rmi-logo" />
+        <img class="w-[120px]" :src="Logo" alt="rmi-logo" />
       </RouterLink>
 
       <div class="w-full flex items-center justify-center gap-x-4">
