@@ -76,8 +76,10 @@ const saveReview = async () => {
     .insert([
       {
         provider_id: provider.value,
+        provider_name: providerName.value,
         comment: reviewData.value.comment,
-        user_id: reviewData.value.isAnonymous ? null : userStore.user?.id,
+        user_id: userStore.user?.id ?? null,
+        loc_name: pastLocation.value ?? null,
         reliability: reviewData.value.reliability,
         speed: reviewData.value.speed,
         price: reviewData.value.price,

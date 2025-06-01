@@ -11,7 +11,10 @@ const allLocations = ref<Location[]>([])
 const first = ref(0)
 
 const paginatedLocations = computed(() => {
-  return allLocations.value.slice(first.value, first.value + 25)
+  const sortedLocations = [...allLocations.value].sort(
+    (a, b) => (b.num_of_providers || 0) - (a.num_of_providers || 0),
+  )
+  return sortedLocations.slice(first.value, first.value + 25)
 })
 
 onMounted(async () => {

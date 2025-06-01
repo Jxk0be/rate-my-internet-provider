@@ -25,7 +25,9 @@ export interface Review {
   created_at: string
   user_id: string | null
   user_display: string | null
+  loc_name: string | null
   provider_id: number
+  provider_name: string | null
   comment: string
   speed: number | null
   price: number | null
