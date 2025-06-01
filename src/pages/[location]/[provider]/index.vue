@@ -266,7 +266,7 @@ const routeToAddReview = async () => {
           <div
             v-for="[key, value] in visibleStats"
             :key="key"
-            class="dark:bg-gray-700/20 rounded-lg p-4"
+            class="dark:bg-gray-700/20 bg-gray-100/60 rounded-lg p-4"
           >
             <div class="flex items-center justify-between">
               <span

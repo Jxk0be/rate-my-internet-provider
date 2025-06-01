@@ -79,7 +79,7 @@ const routeToPreviousLocation = async () => {
         class="flex items-center gap-x-2 text-lg font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer transition-colors duration-200"
       >
         <i class="pi pi-map-marker"></i>
-        <h1 @click="async () => await router.push(`/${previousLocation}`)">{{ locationName }}</h1>
+        <h1 @click="routeToPreviousLocation">{{ locationName }}</h1>
       </div>
 
       <span class="text-lg text-gray-400">/</span>
