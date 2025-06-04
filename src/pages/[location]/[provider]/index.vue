@@ -4,6 +4,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { supabase } from '@/supabase.ts'
 import type { Provider, Review } from '@/types/supabaseTables'
 import AppFooter from '@/components/AppFooter.vue'
+import CustomerReview from '@/components/shared/CustomerReview.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,7 +28,7 @@ const location = ref('')
 const showAllRatings = ref(false)
 const isSmallScreen = ref(false)
 let checkScreenSize = () => {}
-const expandedReviews = ref<{ [key: number]: boolean }>({})
+
 const first = ref(0)
 const statIcons = {
   speed: 'pi-bolt',
@@ -39,7 +40,7 @@ const statIcons = {
   transparency: 'pi-circle',
 } as const
 
-const paginatedReviews = computed(() => {
+const paginatedReviews = computed((): Review[] => {
   return sequentialTime.value.slice(first.value, first.value + 8)
 })
 const visibleStats = computed(() => {
@@ -64,7 +65,7 @@ const statsData = computed(() => ({
   transparency: activeProvider.value.overall_transparency,
   reliability: activeProvider.value.overall_reliability,
 }))
-const sequentialTime = computed(() =>
+const sequentialTime = computed((): Review[] =>
   [...providerReviews.value].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
   ),
@@ -127,59 +128,13 @@ watch(
   { immediate: true },
 )
 
-const calculateOverallRating = (review: Review) => {
-  const ratings = [
-    review.speed,
-    review.price,
-    review.value,
-    review.setup,
-    review.support,
-    review.transparency,
-    review.reliability,
-  ]
 
-  // Filter out null values and calculate average
-  const validRatings = ratings.filter((rating): rating is number => rating !== null)
-
-  if (validRatings.length === 0) {
-    return null
-  }
-
-  const sum = validRatings.reduce((acc, curr) => acc + curr, 0)
-  return sum / validRatings.length // Divide by number of non-null ratings
-}
 
 const formatLabel = (key: string) => {
   return key.replace('overall_', '').replace('_', ' ')
 }
 
-const getRelativeTime = (dateString: string) => {
-  const date = new Date(dateString)
-  const now = new Date()
-  const diff = now.getTime() - date.getTime()
 
-  const seconds = Math.floor(diff / 1000)
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-  const months = Math.floor(days / 30)
-  const years = Math.floor(days / 365)
-
-  if (years > 0) return `${years} ${years === 1 ? 'year' : 'years'} ago`
-  if (months > 0) return `${months} ${months === 1 ? 'month' : 'months'} ago`
-  if (days > 0) return `${days} ${days === 1 ? 'day' : 'days'} ago`
-  if (hours > 0) return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`
-  if (minutes > 0) return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`
-  return 'just now'
-}
-
-const getWordCount = (text: string) => {
-  return text.trim().split(/\s+/).length
-}
-
-const getFirstWords = (text: string, count: number) => {
-  return text.trim().split(/\s+/).slice(0, count).join(' ')
-}
 
 const getIconForStat = (key: string): string => {
   return statIcons[key as keyof typeof statIcons] || 'pi-circle' // fallback icon
@@ -311,61 +266,9 @@ const routeToAddReview = async () => {
 
       <div class="space-y-6 review-view">
         <template v-if="paginatedReviews.length !== 0">
-          <div
-            v-for="(review, _idx) in paginatedReviews"
-            :key="_idx"
-            class="border-b border-gray-200 dark:border-gray-700 last:border-0 pb-6 last:pb-0"
-          >
-            <div class="flex flex-col gap-x-6 mb-4">
-              <h1 class="flex items-center gap-2">
-                <i
-                  :class="[
-                    'pi',
-                    review.user_display ? 'pi-verified' : 'pi-user',
-                    'text-gray-600 dark:text-gray-400',
-                  ]"
-                ></i>
-                {{ review.user_display ?? 'Anonymous' }}
-              </h1>
-              <div class="flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500">
-                <i class="pi pi-clock"></i>
-                {{ getRelativeTime(review.created_at) }}
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3 mb-4">
-              <AppRating
-                readonly
-                :model-value="Math.round(calculateOverallRating(review) ?? 0)"
-                :cancel="false"
-                class="custom-rating"
-              />
-              <span class="text-sm text-gray-600 dark:text-gray-400">
-                {{ (calculateOverallRating(review) ?? 0).toFixed(1) }}
-              </span>
-            </div>
-            <div class="text-gray-700 dark:text-gray-300">
-              <p v-if="!expandedReviews[_idx] && getWordCount(review.comment) > 40">
-                {{ getFirstWords(review.comment, 40) }}...
-                <button
-                  @click="expandedReviews[_idx] = true"
-                  class="ml-1 text-blue-500 cursor-pointer hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
-                >
-                  Read more
-                </button>
-              </p>
-              <p class="preserved-text" v-else>
-                {{ review.comment }}
-                <button
-                  v-if="getWordCount(review.comment) > 40"
-                  @click="expandedReviews[_idx] = false"
-                  class="ml-1 text-blue-500 cursor-pointer hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
-                >
-                  Show less
-                </button>
-              </p>
-            </div>
-          </div>
+          <template v-for="(review, idx) in paginatedReviews" :key="idx">
+            <CustomerReview :review="review" :index="idx"/>
+          </template>
           <AppPaginator
             v-if="sequentialTime.length > 8"
             :rows="8"
@@ -418,8 +321,5 @@ const routeToAddReview = async () => {
   }
 }
 
-.preserved-text {
-  white-space: pre-wrap; /* Preserves line breaks and spaces */
-  word-wrap: break-word; /* Ensures long words don't overflow */
-}
+
 </style>
