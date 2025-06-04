@@ -5,6 +5,7 @@ import { supabase } from '@/supabase.ts'
 import type { Provider, Location } from '@/types/supabaseTables'
 import { Rating as AppRating } from 'primevue'
 import AppFooter from '@/components/AppFooter.vue'
+import ProviderBasic from '@/components/shared/ProviderBasic.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -83,13 +84,6 @@ watch(
   { immediate: true },
 )
 
-const routeToProvider = async (provider_id: number) => {
-  if (provider_id) {
-    isRouting.value = true
-    await router.push(`${route.path}/${provider_id}`)
-    isRouting.value = false
-  }
-}
 
 const routeToAddProvider = async () => {
   await router.push({
@@ -127,34 +121,11 @@ const routeToAddProvider = async () => {
     </div>
 
     <div class="dark:bg-black/20 rounded-lg shadow-sm p-6">
-      <h1 class="font-semibold text-xl mb-4">Providers</h1>
+      <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
 
       <div class="w-full flex flex-col gap-y-4">
         <template v-for="(provider, _idx) in sortedLocations" :key="_idx">
-          <div
-            @click="() => routeToProvider(provider.id)"
-            class="w-full cursor-pointer flex flex-col justify-center border-b border-gray-200 dark:border-gray-700 last:border-0 last:pb-0 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
-          >
-            <div class="flex gap-x-2 items-center">
-              <h1 class="font-bold mb-1 text-xl capitalize text-gray-900 dark:text-white">
-                {{ provider.name }}
-              </h1>
-              <h1 class="text-sm text-gray-500 dark:text-gray-400">
-                ({{ provider.total_reviews }} reviews)
-              </h1>
-            </div>
-            <div class="flex items-center gap-2">
-              <AppRating
-                readonly
-                :model-value="Math.round(provider.overall_rating ?? 0)"
-                :cancel="false"
-                class="custom-rating"
-              />
-              <span class="text-sm text-gray-600 dark:text-gray-400">
-                ({{ (provider.overall_rating ?? 0).toFixed(1) }})
-              </span>
-            </div>
-          </div>
+          <ProviderBasic  :provider="provider"/>
         </template>
 
         <div
@@ -182,7 +153,7 @@ const routeToAddProvider = async () => {
   </div>
 
   <div
-    v-if="isRouting || isLoading"
+    v-if="isLoading"
     class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-20 flex items-center justify-center"
   >
     <AppProgressSpinner />
@@ -191,19 +162,4 @@ const routeToAddProvider = async () => {
   <AppFooter />
 </template>
 
-<style>
-.location-view {
-  .custom-rating {
-    --p-rating-icon-size: 1.25rem;
-    --p-rating-icon-color: #e5e7eb;
-    --p-rating-icon-active-color: #00b8db;
-    --p-rating-gap: 0.25rem;
-  }
-}
 
-@media (min-width: 640px) {
-  .location-view .custom-rating {
-    --p-rating-icon-size: 1.5rem;
-  }
-}
-</style>
