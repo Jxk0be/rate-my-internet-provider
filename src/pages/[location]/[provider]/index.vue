@@ -5,9 +5,13 @@ import { supabase } from '@/supabase.ts'
 import type { Provider, Review } from '@/types/supabaseTables'
 import AppFooter from '@/components/AppFooter.vue'
 import CustomerReview from '@/components/shared/CustomerReview.vue'
+import { useToast } from 'primevue'
+import { useUserStore } from '@/stores/user.ts'
 
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
+const userStore = useUserStore()
 const isLoading = ref(false)
 const activeProvider = ref<Provider>({
   id: -1,
@@ -143,6 +147,63 @@ const routeToAddReview = async () => {
     },
   })
 }
+
+const favoriteProvider = async () => {
+  if (!userStore.user?.id) return
+
+  const { data: userData, error: fetchError } = await supabase
+    .from('public_users')
+    .select('favorite_locations')
+    .eq('user_id', userStore.user.id)
+    .single()
+
+  if (fetchError) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: `Could not fetch user, login and try again`,
+      life: 4000,
+    })
+    return
+  }
+
+  const currentFavorites = userData?.favorite_locations || []
+  console.log(currentFavorites)
+  if (currentFavorites.includes(Number(providerId.value))) {
+    toast.add({
+      severity: 'info',
+      summary: 'Info',
+      detail: `${activeProvider.value.name} already favorited`,
+      life: 4000,
+    })
+    return
+  }
+
+  const updatedFavorites = [...(userData?.favorite_locations || []), Number(providerId.value)]
+
+  const { error } = await supabase
+    .from('public_users')
+    .update({ favorite_locations: updatedFavorites })
+    .eq('user_id', userStore.user.id)
+    .select()
+
+  if (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: `Could not favorite ${activeProvider.value.name}`,
+      life: 4000,
+    })
+    return
+  }
+
+  toast.add({
+    severity: 'success',
+    summary: 'Success',
+    detail: `${activeProvider.value.name} added to favorites!`,
+    life: 4000,
+  })
+}
 </script>
 
 <template>
@@ -199,12 +260,21 @@ const routeToAddReview = async () => {
           </div>
         </div>
 
-        <div class="flex items-start mb-6 sm:mb-0">
+        <div class="flex items-start mb-6 gap-4 sm:mb-0">
           <button
             @click="routeToAddReview"
             class="cursor-pointer px-6 py-3 rounded-lg bg-[#00b8db] text-white font-semibold text-base hover:bg-[#00a3c4] transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95"
           >
             Add Rating
+          </button>
+
+          <button
+            v-if="userStore.user"
+            @click="favoriteProvider"
+            class="cursor-pointer px-6 py-3 rounded-lg bg-amber-400 text-white font-semibold text-base hover:bg-amber-500 transition-colors duration-200 shadow-sm hover:shadow-md active:transform active:scale-95 flex items-center gap-2"
+          >
+            <i class="pi pi-star"></i>
+            Favorite
           </button>
         </div>
       </div>
@@ -283,7 +353,7 @@ const routeToAddReview = async () => {
   >
     <AppProgressSpinner />
   </div>
-
+  <AppToast />
   <AppFooter />
 </template>
 
@@ -312,6 +382,13 @@ const routeToAddReview = async () => {
   }
   .review-view .custom-rating {
     --p-rating-icon-size: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .p-toast {
+    width: 90vw !important;
+    right: 5vw !important;
   }
 }
 </style>
