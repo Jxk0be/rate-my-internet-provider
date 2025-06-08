@@ -119,22 +119,16 @@ watch(
         isLoading.value = false
         return
       }
-
       providerReviews.value = reviews
     }
-
     isLoading.value = false
   },
-  { immediate: true },
+  { immediate: true, flush: 'post' }, // flush: 'post' makes the DOM updates be awaited (sorta)
 )
-
-
 
 const formatLabel = (key: string) => {
   return key.replace('overall_', '').replace('_', ' ')
 }
-
-
 
 const getIconForStat = (key: string): string => {
   return statIcons[key as keyof typeof statIcons] || 'pi-circle' // fallback icon
@@ -267,7 +261,7 @@ const routeToAddReview = async () => {
       <div class="space-y-6 review-view">
         <template v-if="paginatedReviews.length !== 0">
           <template v-for="(review, idx) in paginatedReviews" :key="idx">
-            <CustomerReview :review="review" :index="idx"/>
+            <CustomerReview :review="review" :index="idx" />
           </template>
           <AppPaginator
             v-if="sequentialTime.length > 8"
@@ -320,6 +314,4 @@ const routeToAddReview = async () => {
     --p-rating-icon-size: 1rem;
   }
 }
-
-
 </style>

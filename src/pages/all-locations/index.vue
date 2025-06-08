@@ -5,7 +5,6 @@ import AppFooter from '@/components/AppFooter.vue'
 import type { Location } from '@/types/supabaseTables'
 
 const isLoading = ref(false)
-const isRouting = ref(false)
 const fetchedLocations = ref<Location[]>([])
 const allLocations = ref<Location[]>([])
 const first = ref(0)
@@ -30,8 +29,9 @@ onMounted(async () => {
     }
   } catch (error) {
     console.log('Could not fetch all locations:', error)
+  } finally {
+    isLoading.value = false
   }
-  isLoading.value = false
 })
 
 const formatLocationName = (loc: Location) => {
@@ -87,7 +87,7 @@ const formatLocationName = (loc: Location) => {
 
     <!-- Loading Overlay -->
     <div
-      v-if="isLoading || isRouting"
+      v-if="isLoading"
       class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-20 flex items-center justify-center"
     >
       <AppProgressSpinner />

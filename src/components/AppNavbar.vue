@@ -21,7 +21,6 @@ const selectedCity = ref<City | null>(null)
 const allCities = ref<City[]>([])
 const citySuggestions = ref<City[]>([])
 const isLoading = ref(false)
-const isRouting = ref(false)
 const isSearchVisible = ref(false)
 const isMobileMenuOpen = ref(false)
 
@@ -78,8 +77,6 @@ const fetchCities = async () => {
 
 const routeToLocation = async () => {
   if (selectedState.value && selectedCity.value) {
-    isRouting.value = true
-
     const city = selectedCity.value?.name.replace(/\s+/g, '')
     const state = selectedState.value?.name.replace(/\s+/g, '')
     const locationRoute = city + '_' + state
@@ -90,7 +87,6 @@ const routeToLocation = async () => {
     })
 
     isSearchVisible.value = false
-    isRouting.value = false
   }
 }
 
@@ -318,14 +314,6 @@ const mobileLogout = async () => {
       </div>
     </div>
   </div>
-
-  <div
-    v-if="isRouting"
-    class="fixed inset-0 bg-black/30 backdrop-blur-sm z-20 flex items-center justify-center"
-  >
-    <AppProgressSpinner />
-  </div>
-
   <LoginRegisterModal />
 </template>
 

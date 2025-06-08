@@ -31,17 +31,21 @@ watch(
   () => location.value,
   async () => {
     if (!location.value) return
-
     if (route.query.from !== 'search') return
 
     const locationString = location.value.toString()
 
     isLoading.value = true
-    const { data: locations } = await supabase
+    const { data: locations, error: findLocError } = await supabase
       .from('locations')
       .select('*')
       .eq('location', locationString)
 
+    if (findLocError) {
+      console.error('Failed to insert location:', findLocError)
+      isLoading.value = false
+      return
+    }
     const sbLocation = locations?.[0]
 
     if (!sbLocation) {
@@ -79,9 +83,8 @@ watch(
     locationProviders.value = providers ?? []
     isLoading.value = false
   },
-  { immediate: true },
+  { immediate: true, flush: 'post' }, // flush: 'post' makes the DOM updates be awaited (sorta)
 )
-
 
 const routeToAddProvider = async () => {
   await router.push({
@@ -119,11 +122,10 @@ const routeToAddProvider = async () => {
     </div>
 
     <div class="dark:bg-black/20 rounded-lg shadow-sm p-6">
-      <h1 class="font-semibold text-xl mb-4">List of Providers</h1>
-
+      <h1 class="font-semibold text-xl mb-4">Providers</h1>
       <div class="w-full flex flex-col gap-y-4">
         <template v-for="(provider, _idx) in sortedLocations" :key="_idx">
-          <ProviderBasic  :provider="provider"/>
+          <ProviderBasic :provider="provider" />
         </template>
 
         <div
@@ -160,4 +162,19 @@ const routeToAddProvider = async () => {
   <AppFooter />
 </template>
 
+<style>
+.location-view {
+  .custom-rating {
+    --p-rating-icon-size: 1.25rem;
+    --p-rating-icon-color: #e5e7eb;
+    --p-rating-icon-active-color: #00b8db;
+    --p-rating-gap: 0.25rem;
+  }
+}
 
+@media (min-width: 640px) {
+  .location-view .custom-rating {
+    --p-rating-icon-size: 1.5rem;
+  }
+}
+</style>
