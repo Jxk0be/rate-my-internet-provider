@@ -21,8 +21,10 @@ const isLoading = ref(false)
 const isRouting = ref(false)
 
 const stateSearch = (event: AutoCompleteCompleteEvent) => {
-  stateSuggestions.value = [...states.value].filter((st) =>
-    st.name.toLowerCase().includes(event.query.toLowerCase()),
+  stateSuggestions.value = [...states.value].filter(
+    (st) =>
+      st.name.toLowerCase().includes(event.query.toLowerCase()) ||
+      st.iso2.toLowerCase().includes(event.query.toLowerCase()),
   )
 }
 
