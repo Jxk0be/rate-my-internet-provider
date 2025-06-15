@@ -25,6 +25,7 @@ const activeProvider = ref<Provider>({
   overall_support: null,
   overall_transparency: null,
   overall_reliability: null,
+  associatedLocation: null,
   total_reviews: null,
 })
 const providerReviews = ref<Review[]>([])
