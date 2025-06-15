@@ -17,6 +17,7 @@ export interface Provider {
   overall_support: number | null
   overall_transparency: number | null
   overall_reliability: number | null
+  associatedLocation: string | null
   total_reviews: number | null
 }
 

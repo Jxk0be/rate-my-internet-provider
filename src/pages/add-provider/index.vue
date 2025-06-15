@@ -50,7 +50,14 @@ const saveProvider = async () => {
   const { data: newProvider, error }: { data: Provider | null; error: PostgrestError | null } =
     await supabase
       .from('providers')
-      .insert([{ name: providerName.value, location_id: locationId, user_id: userStore.user.id }])
+      .insert([
+        {
+          name: providerName.value,
+          location_id: locationId,
+          user_id: userStore.user.id,
+          associatedLocation: previousLocation || null,
+        },
+      ])
       .select()
       .single()
 

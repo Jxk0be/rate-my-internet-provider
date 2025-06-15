@@ -168,7 +168,7 @@ const favoriteProvider = async () => {
   }
 
   const currentFavorites = userData?.favorite_locations || []
-  console.log(currentFavorites)
+
   if (currentFavorites.includes(Number(providerId.value))) {
     toast.add({
       severity: 'info',
